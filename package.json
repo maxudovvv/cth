@@ -1,0 +1,26 @@
+{
+  "name": "crimean-tatar-heritage-canada",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Cultural and educational digital platform for Crimean Tatar Heritage Canada. Bootstrap phase — application not yet implemented.",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "//": "Scripts are placeholders. The Next.js app is intentionally NOT installed during the bootstrap phase. See docs/plans/bootstrap-and-discovery-plan.md.",
+    "dev": "echo \"Not implemented yet. Application scaffolding begins in Phase 5. See docs/plans/bootstrap-and-discovery-plan.md\" && exit 1",
+    "build": "echo \"Not implemented yet. See docs/plans/bootstrap-and-discovery-plan.md\" && exit 1",
+    "lint": "echo \"Not implemented yet. Linting is configured in Phase 5.\" && exit 0",
+    "typecheck": "echo \"Not implemented yet. TypeScript is configured in Phase 5.\" && exit 0",
+    "test": "echo \"Not implemented yet.\" && exit 0"
+  },
+  "keywords": [
+    "crimean-tatar",
+    "heritage",
+    "culture",
+    "canada",
+    "education",
+    "museum"
+  ],
+  "license": "UNLICENSED"
+}

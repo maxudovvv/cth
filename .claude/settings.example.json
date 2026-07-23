@@ -1,0 +1,44 @@
+{
+  "//": "EXAMPLE ONLY. Claude Code reads .claude/settings.json, NOT this file. Copy the hooks you want into settings.json to enable them. See .claude/hooks/README.md. The format/lint/typecheck hooks are commented-out via the disabled_* keys because their tools are not installed until Phase 5.",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/protect-cultural-assets.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/check-source-status.sh"
+          }
+        ]
+      }
+    ]
+  },
+
+  "disabled_examples_enable_in_phase_5": {
+    "note": "Move these into hooks.PostToolUse once Prettier / ESLint / TypeScript are installed.",
+    "format_after_edit": {
+      "matcher": "Edit|Write|MultiEdit",
+      "command": "npx prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+    },
+    "lint_check": {
+      "matcher": "Edit|Write|MultiEdit",
+      "command": "npx eslint \"$CLAUDE_FILE_PATH\" 2>/dev/null || true"
+    },
+    "typecheck": {
+      "matcher": "Edit|Write|MultiEdit",
+      "command": "npx tsc --noEmit 2>/dev/null || true"
+    }
+  }
+}
