@@ -1,0 +1,40 @@
+{
+  "$schema": "./media-manifest.schema (informal) — see docs/media-workflow.md",
+  "description": "EXAMPLE media manifest. Copy to content/media-manifest.json for real use. Only entries with publicationStatus 'approved' AND a file under public/media/approved/ may be shown on the site. Pending items must never be production-eligible. Facebook/social media must NOT be scraped — obtain originals + permission.",
+  "items": [
+    {
+      "id": "example-approved-001",
+      "filePath": "public/media/approved/EXAMPLE-do-not-ship.jpg",
+      "title": "Example approved photograph (illustrative only)",
+      "description": "Illustrative manifest row showing the required fields for an approved image.",
+      "sourceUrl": "",
+      "photographer": "Name of photographer",
+      "event": "Related event name or id",
+      "date": "YYYY-MM-DD",
+      "peopleShown": ["Name (with consent)"],
+      "copyrightOwner": "Rights holder",
+      "permissionStatus": "granted",
+      "captionStatus": "verified",
+      "culturalReviewStatus": "reviewed",
+      "intendedPage": "/gallery",
+      "publicationStatus": "approved"
+    },
+    {
+      "id": "example-pending-002",
+      "filePath": "public/media/pending/EXAMPLE-pending.jpg",
+      "title": "Example pending photograph",
+      "description": "Illustrative pending row. NOT production-eligible. Do not display.",
+      "sourceUrl": "(e.g. provided by organization — never scraped)",
+      "photographer": "Unknown — to confirm",
+      "event": "To confirm",
+      "date": "",
+      "peopleShown": [],
+      "copyrightOwner": "To confirm",
+      "permissionStatus": "requires-permission",
+      "captionStatus": "none",
+      "culturalReviewStatus": "requires-cultural-review",
+      "intendedPage": "/gallery",
+      "publicationStatus": "pending"
+    }
+  ]
+}

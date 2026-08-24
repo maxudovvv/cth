@@ -1,0 +1,633 @@
+/* Fonts loaded at RUNTIME via Google Fonts (@import) — no build-time network
+   dependency, so `next build` works offline and real display type is available
+   in the browser. Playfair Display (display), Cormorant Garamond (serif
+   accents/quotes), Outfit (sans UI/body). Pattern adopted from the legacy audit. */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  DESIGN TOKENS — Crimean Tatar Heritage Canada (PROVISIONAL)
+  ----------------------------------------------------------
+  All color VALUES below are provisional starting points. They require
+  contrast testing (WCAG 2.1 AA) and organizational approval before being
+  treated as final. Documented in docs/design-system.md. Named directions
+  come from the discovery brief: Midnight Navy, Crimean Gold, Sea Turquoise,
+  Warm Sand, Pomegranate Red, Warm Ivory.
+*/
+
+:root {
+  /* Palette (provisional) */
+  --color-navy: #0e1b2a; /* Midnight Navy — deep base */
+  --color-navy-700: #16293c;
+  --color-navy-600: #21384d;
+  --color-gold: #c39a3f; /* Crimean Gold — accent (darkened for contrast on ivory) */
+  --color-gold-soft: #d9bd77;
+  --color-turquoise: #1f6f77; /* Sea Turquoise — secondary accent (deepened for contrast) */
+  --color-sand: #d9c7a8; /* Warm Sand — neutral surface */
+  --color-pomegranate: #9e2b25; /* Pomegranate Red — emphasis, used sparingly */
+  --color-ivory: #f7f2e8; /* Warm Ivory — light base */
+  --color-ivory-dim: #efe7d6;
+
+  /* Text / lines */
+  --color-ink: #17222e; /* body text on light */
+  --color-ink-soft: #48566380; /* muted, use with care for contrast */
+  --color-line: #e0d6c2; /* hairline on light surfaces */
+
+  /* Typography — loaded via runtime @import (above), with robust fallbacks so
+     text is fully legible before/without the web fonts. */
+  --font-display: "Source Serif 4", "Iowan Old Style", "Palatino Linotype",
+    Georgia, Cambria, "Times New Roman", serif;
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+    Arial, "Noto Sans", sans-serif;
+
+  /* Spacing scale (rem) — complements Tailwind defaults */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Radius */
+  --radius-sm: 2px;
+  --radius: 4px;
+  --radius-lg: 8px;
+
+  /* Secondary accent depth */
+  --color-turquoise-deep: #17565c;
+
+  /* Motion tokens (Editorial Heritage) */
+  --dur-fast: 200ms;
+  --dur-base: 400ms;
+  --dur-slow: 680ms;
+  --ease-entrance: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --motion-stagger: 80ms;
+  --motion-reveal-distance: 28px;
+  --motion-hover-scale: 1.025;
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 2px var(--color-ivory), 0 0 0 4px var(--color-gold);
+}
+
+/* Base element styling */
+* {
+  border-color: var(--color-line);
+}
+
+/* Fixed-header offset for anchor / hash targets (68px header + breathing room). */
+[id] {
+  scroll-margin-top: 88px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  /* Stable deep-navy base so route transitions never flash cream. Every page
+     opens with a navy hero/masthead and ends with the navy footer, so this is
+     only ever visible momentarily during a transition. */
+  background-color: var(--color-navy);
+}
+
+body {
+  background-color: var(--color-navy);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem; /* 17px base — comfortable for older readers */
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-navy);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Accessible focus — visible for keyboard users */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  z-index: 100;
+  background: var(--color-navy);
+  color: var(--color-ivory);
+  padding: 0.625rem 1rem;
+  border-radius: var(--radius);
+  transition: top var(--dur-fast) var(--ease-entrance);
+}
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+/* Utilities layered on Tailwind */
+@layer components {
+  .container-content {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-content {
+      padding-inline: 2rem;
+    }
+  }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-turquoise);
+  }
+
+  /* Provisional / status pills */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+  }
+  .status-pill--provisional {
+    color: #8a6d2f;
+    background: #f6ecd2;
+  }
+  /* Quieter, museum-label style status marker (less visually dominant). */
+  .status-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-navy) 55%, transparent);
+  }
+  .status-note::before {
+    content: "";
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 999px;
+    background: var(--color-gold);
+    flex: none;
+  }
+  .status-note--on-dark {
+    color: color-mix(in srgb, var(--color-ivory) 70%, transparent);
+  }
+}
+
+/*
+  HERO DEPTH — restrained, CSS-only atmosphere (no images, no canvas, no animated
+  noise). All layers are decorative and must not reduce text readability.
+*/
+
+/* Layered warm paper grain + faint textile grid over the navy field. */
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* radial tonal shifts: gold ambient (top-right), turquoise undertone (lower-left) */
+  background:
+    radial-gradient(
+      42rem 42rem at 78% -8%,
+      color-mix(in srgb, var(--color-gold) 16%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      40rem 40rem at 8% 108%,
+      color-mix(in srgb, var(--color-turquoise) 14%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--color-navy),
+      var(--color-navy-700) 55%,
+      var(--color-navy)
+    );
+}
+
+/* Faint architectural / textile-inspired grid. Very low opacity. */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-ivory) 6%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-ivory) 5%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 4.5rem 4.5rem;
+  -webkit-mask-image: radial-gradient(70% 70% at 60% 30%, #000 30%, transparent 78%);
+  mask-image: radial-gradient(70% 70% at 60% 30%, #000 30%, transparent 78%);
+}
+
+/* Subtle grain, drawn as a tiny repeating dot field (cheap, no image asset). */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--color-ivory) 9%, transparent) 0.5px,
+    transparent 0.5px
+  );
+  background-size: 3px 3px;
+}
+
+/* Warm paper texture for media frames (light surfaces). */
+.paper {
+  background-color: var(--color-ivory-dim);
+  background-image:
+    radial-gradient(
+      color-mix(in srgb, var(--color-navy) 5%, transparent) 0.5px,
+      transparent 0.5px
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-sand) 40%, transparent),
+      transparent 60%
+    );
+  background-size: 3px 3px, 100% 100%;
+}
+
+/* Scroll indicator line nudge. */
+@keyframes scroll-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+.scroll-nudge {
+  animation: scroll-nudge 2.4s var(--ease-entrance) infinite;
+}
+
+/* ---- Editorial Heritage utilities (adapted from the legacy CACT audit) ---- */
+
+/* Serif accent family for quotes / editorial flourishes. */
+.font-serif-accent {
+  font-family: var(--font-serif);
+}
+
+/* Wide container alias (legacy naming) — maps to our content width. */
+.container-wide {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 768px) {
+  .container-wide {
+    padding-inline: 2rem;
+  }
+}
+
+/* Tiled Crimean Tatar–inspired ornamental texture (abstract, provisional). */
+.ornament-tile {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23c39a3f' stroke-width='1.1' opacity='0.6'%3E%3Cpath d='M60 8 L80 28 L60 48 L40 28 Z'/%3E%3Cpath d='M60 72 L80 92 L60 112 L40 92 Z'/%3E%3Cpath d='M8 60 L28 40 L48 60 L28 80 Z'/%3E%3Cpath d='M72 60 L92 40 L112 60 L92 80 Z'/%3E%3Ccircle cx='60' cy='60' r='9'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+/* Thin gold gradient hairline. */
+.gold-line {
+  background: linear-gradient(90deg, transparent, rgba(195, 154, 63, 0.7), transparent);
+}
+
+/* Restrained gold text gradient for select display accents. */
+.text-gradient-gold {
+  background: linear-gradient(120deg, #e6cf97 0%, #c39a3f 55%, #a9812f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Text-reveal mask with optical breathing room for display-serif glyphs.
+   Negative margins preserve the original heading rhythm while the padding
+   protects capitals, descenders, terminals, and italic overhangs. */
+.mask-line {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.1em 0.18em;
+  margin-block: -0.1em -0.18em;
+  padding-inline: 0.16em;
+  margin-inline: -0.16em;
+}
+.mask-line__content {
+  display: block;
+  padding-inline: 0.025em;
+}
+
+/* Balanced inline breathing room for masked uppercase / serif text. The
+   negative margin cancels the added layout width, so text alignment is not
+   shifted while glyph side-bearings remain inside the clipping rectangle. */
+.glyph-safe-mask {
+  overflow: hidden;
+  padding-inline: 0.18em;
+  margin-inline: -0.18em;
+}
+
+/* Animated center-out gradient underline for links. */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1.5px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  background: linear-gradient(90deg, var(--color-turquoise), var(--color-gold));
+}
+.link-underline:hover::after,
+.link-underline[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Restrained glass surfaces (used sparingly, on dark sections only). */
+.glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Decorative loops — gentle, gated by prefers-reduced-motion below. */
+@keyframes hero-ambient-zoom {
+  0% { transform: scale(1.035); }
+  100% { transform: scale(1.07); }
+}
+.animate-kenburns {
+  animation: hero-ambient-zoom 24s var(--ease-entrance) forwards;
+  will-change: transform;
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(2deg); }
+}
+.animate-floaty { animation: floaty 10s ease-in-out infinite; }
+
+@keyframes ornament-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.ornament-stroke-reveal path {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: ornament-stroke 1.2s var(--ease-entrance) 0.75s forwards;
+}
+
+.motion-card {
+  transition:
+    transform var(--dur-base) var(--ease-entrance),
+    border-color var(--dur-base) var(--ease-entrance),
+    background-color var(--dur-base) var(--ease-entrance),
+    box-shadow var(--dur-base) var(--ease-entrance);
+}
+
+/* Museum-style interaction for the cultural showcase in Who We Are. */
+.heritage-showcase-card {
+  border: 1px solid rgba(217, 189, 119, 0.22);
+  background: #0b1b2b;
+  box-shadow: 0 10px 26px rgba(3, 10, 18, 0.16);
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.heritage-showcase-card__image,
+.heritage-showcase-card__veil,
+.heritage-showcase-card__title,
+.heritage-showcase-card__subtitle {
+  transition: 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.heritage-showcase-card__image {
+  transform: scale(1.001);
+}
+
+.heritage-showcase-card__veil {
+  background: linear-gradient(to top, rgba(5, 17, 30, 0.94) 0%, rgba(5, 17, 30, 0.32) 48%, rgba(5, 17, 30, 0.04) 76%);
+}
+
+.heritage-showcase-card__title {
+  transform: translateY(0);
+}
+
+.heritage-showcase-card__subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heritage-showcase-card--muted {
+  filter: brightness(0.7) saturate(0.78);
+  opacity: 0.82;
+}
+
+/* Contact hero: a cinematic, edge-to-edge bridge between landscapes. */
+.contact-hero__picture {
+  --contact-shift-x: 0px;
+  --contact-shift-y: 0px;
+  transform: translate3d(var(--contact-shift-x), var(--contact-shift-y), 0);
+  transition: transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.contact-hero__image {
+  object-position: 66% center;
+}
+
+.contact-hero__horizontal-overlay {
+  background: linear-gradient(90deg, rgba(7, 23, 38, 0.96) 0%, rgba(7, 23, 38, 0.78) 36%, rgba(7, 23, 38, 0.25) 70%, rgba(7, 23, 38, 0.12) 100%);
+}
+
+.contact-hero__vertical-overlay {
+  background:
+    linear-gradient(to bottom, rgba(7, 23, 38, 0.62) 0%, transparent 20%, transparent 76%, rgba(7, 23, 38, 0.76) 100%),
+    linear-gradient(to right, rgba(7, 23, 38, 0.14), transparent 58%);
+}
+
+.contact-hero__thread-light {
+  background: radial-gradient(ellipse 27% 26% at 71% 58%, rgba(226, 194, 94, 0.32), rgba(48, 176, 205, 0.12) 34%, transparent 70%);
+  mix-blend-mode: screen;
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .contact-hero__horizontal-overlay {
+    background: linear-gradient(90deg, rgba(7, 23, 38, 0.97) 0%, rgba(7, 23, 38, 0.86) 42%, rgba(7, 23, 38, 0.34) 76%, rgba(7, 23, 38, 0.2) 100%);
+  }
+}
+
+@media (max-width: 639px) {
+  .contact-hero__picture {
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .contact-hero__image {
+    object-position: center;
+  }
+
+  .contact-hero__horizontal-overlay {
+    background: linear-gradient(to bottom, rgba(7, 23, 38, 0.97) 0%, rgba(7, 23, 38, 0.9) 34%, rgba(7, 23, 38, 0.32) 62%, rgba(7, 23, 38, 0.62) 100%);
+  }
+
+  .contact-hero__vertical-overlay {
+    background: linear-gradient(to bottom, rgba(7, 23, 38, 0.42), transparent 20%, transparent 76%, rgba(7, 23, 38, 0.86));
+  }
+
+  .contact-hero__thread-light {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-hero__picture {
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .heritage-showcase-card__subtitle {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .heritage-showcase-card:hover,
+  .heritage-showcase-card:focus-visible {
+    transform: translateY(-7px);
+    border-color: rgba(217, 189, 119, 0.68);
+    box-shadow: 0 18px 42px rgba(3, 10, 18, 0.28), 0 0 24px rgba(196, 151, 54, 0.15);
+  }
+
+  .heritage-showcase-card:hover .heritage-showcase-card__image,
+  .heritage-showcase-card:focus-visible .heritage-showcase-card__image {
+    transform: scale(1.05);
+  }
+
+  .heritage-showcase-card:hover .heritage-showcase-card__veil,
+  .heritage-showcase-card:focus-visible .heritage-showcase-card__veil {
+    background: linear-gradient(to top, rgba(5, 17, 30, 0.99) 0%, rgba(5, 17, 30, 0.53) 56%, rgba(5, 17, 30, 0.08) 82%);
+  }
+
+  .heritage-showcase-card:hover .heritage-showcase-card__title,
+  .heritage-showcase-card:focus-visible .heritage-showcase-card__title {
+    transform: translateY(-3px);
+    color: #e7cf91;
+  }
+
+  .heritage-showcase-card:hover .heritage-showcase-card__subtitle,
+  .heritage-showcase-card:focus-visible .heritage-showcase-card__subtitle {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .motion-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(217, 189, 119, 0.35);
+    background-color: rgba(255, 255, 255, 0.09);
+    box-shadow: 0 18px 40px rgba(3, 10, 18, 0.18);
+  }
+}
+
+/* Motion reveal helper — hidden state; JS/Framer handles entrance.
+   When reduced motion is preferred, content is always visible. */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  [data-motion-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: inset(0) !important;
+  }
+  .mask-line {
+    overflow: visible;
+  }
+  .animate-kenburns {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+  .ornament-stroke-reveal path {
+    animation: none !important;
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

@@ -48,3 +48,19 @@ yarn-error.log*
 # Local Claude Code state (keep committed config, ignore transient state)
 .claude/settings.local.json
 .claude/*.local.json
+
+# Media governance: pending media is NOT production-eligible and must never
+# be committed. Only cleared assets under public/media/approved/ are tracked.
+/public/media/pending/*
+!/public/media/pending/README.md
+
+# Real media manifest may contain contact/consent details; keep only the example.
+/content/media-manifest.json
+
+# Legacy CACT reference archive — used only as a temporary visual/motion
+# reference; never committed to this repository.
+/cact-website.zip
+/cact-legacy-audit/
+/_legacy/
+
+.pnpm-store/
