@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { createPortal } from "react-dom";
 import { useEffect, useId, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
@@ -77,7 +78,7 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
         )}
       </button>
 
-      {isOpen && (
+      {isOpen && createPortal(
         <div
           className={`heritage-book-dialog ${reduceMotion ? "heritage-book-dialog--still" : ""}`}
           role="dialog"
@@ -136,7 +137,8 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
               </nav>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );
