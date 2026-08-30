@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import {
   motion,
   useReducedMotion,
@@ -21,7 +21,6 @@ import { HeritageBook } from "@/components/home/HeritageBook";
 export function HomeHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = Boolean(useReducedMotion());
-  const [introPlaying, setIntroPlaying] = useState(true);
   const ready = useAnimationReady();
   const entranceState = ready || reduceMotion ? "visible" : "hidden";
   const { scrollYProgress } = useScroll({
@@ -39,14 +38,6 @@ export function HomeHero() {
     [0, reduceMotion ? 0 : 10],
   );
 
-  const finishIntro = useCallback(() => {
-    setIntroPlaying(false);
-  }, []);
-
-  useEffect(() => {
-    if (reduceMotion) setIntroPlaying(false);
-  }, [reduceMotion]);
-
   return (
     <section
       ref={sectionRef}
@@ -57,19 +48,18 @@ export function HomeHero() {
         className="absolute -inset-y-10 inset-x-0 z-0"
         style={{ y: mediaY }}
       >
-        {introPlaying && !reduceMotion ? (
+        {!reduceMotion ? (
           <video
             className="h-full w-full object-cover"
             style={{ objectPosition: heroSlot.objectPosition ?? "center" }}
             autoPlay
             muted
+            loop
             playsInline
-            preload="auto"
+            preload="metadata"
             poster={heroSlot.posterSrc}
             aria-label={heroSlot.alt}
             disablePictureInPicture
-            onEnded={finishIntro}
-            onError={finishIntro}
           >
             <source src={heroSlot.desktopVideoSrc} type="video/mp4" />
           </video>
@@ -200,7 +190,7 @@ export function HomeHero() {
             Discover
           </motion.a>
         </div>
-        {!introPlaying && <motion.div
+        <motion.div
           data-motion-reveal
           initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24, rotate: 1.5 }}
           animate={ready || reduceMotion ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 24, rotate: 1.5 }}
@@ -208,23 +198,13 @@ export function HomeHero() {
           className="hidden justify-center lg:flex"
         >
           <HeritageBook variant="scene-hotspot" />
-        </motion.div>}
+        </motion.div>
         </div>
       </motion.div>
 
-      {!introPlaying && <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 justify-center lg:hidden">
+      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 justify-center lg:hidden">
         <HeritageBook />
-      </div>}
-
-      {introPlaying && !reduceMotion && (
-        <button
-          type="button"
-          onClick={finishIntro}
-          className="absolute bottom-7 right-6 z-30 rounded-full border border-ivory/25 bg-navy/55 px-4 py-2 text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-ivory/85 backdrop-blur-md transition-colors hover:bg-navy/80 lg:right-10"
-        >
-          Skip intro
-        </button>
-      )}
+      </div>
 
       <motion.div
         aria-hidden="true"
