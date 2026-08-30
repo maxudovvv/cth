@@ -16,6 +16,7 @@ import { OrnamentLine } from "@/components/ornament/Ornament";
 import { heroSlot } from "@/content/data/media";
 import { organization } from "@/content/data/site";
 import { motionTokens, premiumEase } from "@/lib/motion";
+import { HeritageBook } from "@/components/home/HeritageBook";
 
 export function HomeHero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -81,6 +82,7 @@ export function HomeHero() {
         className="container-wide relative z-20 flex min-h-[100svh] items-center py-28"
         style={{ y: contentY }}
       >
+        <div className="grid w-full items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,0.72fr)] lg:gap-8">
         <div className="max-w-[52rem]">
           <motion.p
             data-motion-reveal
@@ -169,7 +171,21 @@ export function HomeHero() {
             Discover
           </motion.a>
         </div>
+        <motion.div
+          data-motion-reveal
+          initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24, rotate: 1.5 }}
+          animate={ready || reduceMotion ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 24, rotate: 1.5 }}
+          transition={{ duration: reduceMotion ? 0 : 0.85, delay: reduceMotion ? 0 : 0.72, ease: premiumEase }}
+          className="hidden justify-center lg:flex"
+        >
+          <HeritageBook />
+        </motion.div>
+        </div>
       </motion.div>
+
+      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 justify-center lg:hidden">
+        <HeritageBook />
+      </div>
 
       <motion.div
         aria-hidden="true"
