@@ -181,7 +181,7 @@ body {
 .heritage-book-trigger--scene {
   width: min(24rem, 29vw);
   min-height: 17rem;
-  transform: translate(2.35rem, 12rem) rotate(-3deg);
+  transform: translate(-3.75rem, 12rem) rotate(-3deg);
 }
 .heritage-book-scene-label {
   position: absolute;
