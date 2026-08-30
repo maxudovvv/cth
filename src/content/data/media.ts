@@ -87,10 +87,13 @@ export const textiles = {
 /** Final approved composition target for the interactive heritage-book intro. */
 export const heroSlot: MediaSlotConfig = {
   slotId: "hero-cinematic",
-  mediaType: "image",
-  futureAnimationSlot: true,
+  mediaType: "video",
+  futureAnimationSlot: false,
   fallbackImageSrc: "/media/pending/hero-book-scene-v2.jpg",
   reducedMotionImageSrc: "/media/pending/hero-book-scene-v2.jpg",
+  posterSrc: "/media/video/heritage-book-intro-poster.jpg",
+  desktopVideoSrc: "/media/video/heritage-book-intro.mp4",
+  mobileVideoSrc: "/media/video/heritage-book-intro.mp4",
   objectPosition: "center center",
   alt: "A warm Crimean Tatar interior overlooking Bakhchysarai, with coffee, sweets, and a heritage book on the table.",
   decorativeSvg: null,

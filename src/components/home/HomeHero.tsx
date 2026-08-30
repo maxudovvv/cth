@@ -1,13 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   motion,
   useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
-import { MediaSlot } from "@/components/media/MediaSlot";
 import {
   AnimatedHeading,
   useAnimationReady,
@@ -21,6 +21,7 @@ import { HeritageBook } from "@/components/home/HeritageBook";
 export function HomeHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = Boolean(useReducedMotion());
+  const [introPlaying, setIntroPlaying] = useState(true);
   const ready = useAnimationReady();
   const entranceState = ready || reduceMotion ? "visible" : "hidden";
   const { scrollYProgress } = useScroll({
@@ -38,6 +39,25 @@ export function HomeHero() {
     [0, reduceMotion ? 0 : 10],
   );
 
+  const finishIntro = useCallback(() => {
+    setIntroPlaying(false);
+    try {
+      window.sessionStorage.setItem("cth-heritage-intro-seen", "true");
+    } catch {
+      // Session storage may be unavailable in strict privacy modes.
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      if (reduceMotion || window.sessionStorage.getItem("cth-heritage-intro-seen")) {
+        setIntroPlaying(false);
+      }
+    } catch {
+      if (reduceMotion) setIntroPlaying(false);
+    }
+  }, [reduceMotion]);
+
   return (
     <section
       ref={sectionRef}
@@ -48,13 +68,33 @@ export function HomeHero() {
         className="absolute -inset-y-10 inset-x-0 z-0"
         style={{ y: mediaY }}
       >
-        <MediaSlot
-          config={heroSlot}
-          rounded="rounded-none"
-          className="h-full w-full"
-          sizes="100vw"
-          eager
-        />
+        {introPlaying && !reduceMotion ? (
+          <video
+            className="h-full w-full object-cover"
+            style={{ objectPosition: heroSlot.objectPosition ?? "center" }}
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            poster={heroSlot.posterSrc}
+            aria-label={heroSlot.alt}
+            disablePictureInPicture
+            onEnded={finishIntro}
+            onError={finishIntro}
+          >
+            <source src={heroSlot.desktopVideoSrc} type="video/mp4" />
+          </video>
+        ) : (
+          <Image
+            src={heroSlot.fallbackImageSrc}
+            alt={heroSlot.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            style={{ objectPosition: heroSlot.objectPosition ?? "center" }}
+          />
+        )}
       </motion.div>
 
       <div
@@ -171,7 +211,7 @@ export function HomeHero() {
             Discover
           </motion.a>
         </div>
-        <motion.div
+        {!introPlaying && <motion.div
           data-motion-reveal
           initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24, rotate: 1.5 }}
           animate={ready || reduceMotion ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 24, rotate: 1.5 }}
@@ -179,13 +219,23 @@ export function HomeHero() {
           className="hidden justify-center lg:flex"
         >
           <HeritageBook variant="scene-hotspot" />
-        </motion.div>
+        </motion.div>}
         </div>
       </motion.div>
 
-      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 justify-center lg:hidden">
+      {!introPlaying && <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 justify-center lg:hidden">
         <HeritageBook />
-      </div>
+      </div>}
+
+      {introPlaying && !reduceMotion && (
+        <button
+          type="button"
+          onClick={finishIntro}
+          className="absolute bottom-7 right-6 z-30 rounded-full border border-ivory/25 bg-navy/55 px-4 py-2 text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-ivory/85 backdrop-blur-md transition-colors hover:bg-navy/80 lg:right-10"
+        >
+          Skip intro
+        </button>
+      )}
 
       <motion.div
         aria-hidden="true"
