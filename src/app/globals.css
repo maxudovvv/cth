@@ -181,29 +181,54 @@ body {
 .heritage-book-trigger--scene {
   width: min(24rem, 29vw);
   min-height: 17rem;
-  transform: translate(1.2rem, 6.6rem) rotate(-3deg);
+  transform: translate(2.35rem, 12rem) rotate(-3deg);
 }
 .heritage-book-scene-label {
   position: absolute;
   right: 1.8rem;
   bottom: 1.1rem;
-  border: 1px solid rgba(247,242,232,.22);
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(217,189,119,.48);
   border-radius: 999px;
   padding: .58rem .9rem;
   color: var(--color-ivory);
-  background: rgba(7,25,42,.68);
-  box-shadow: 0 .6rem 1.6rem rgba(0,0,0,.24);
+  background: rgba(7,25,42,.82);
+  box-shadow: 0 .6rem 1.6rem rgba(0,0,0,.28), 0 0 0 rgba(217,189,119,0);
   backdrop-filter: blur(9px);
   font-size: .62rem;
   font-weight: 700;
   letter-spacing: .15em;
   text-transform: uppercase;
-  transition: background-color 200ms ease, transform 300ms var(--ease-entrance);
+  animation: heritage-book-invite 4.8s ease-in-out infinite;
+  transition: background-color 200ms ease, border-color 200ms ease, transform 300ms var(--ease-entrance);
+}
+.heritage-book-scene-label::after {
+  content: "";
+  position: absolute;
+  inset: -50% auto -50% -45%;
+  z-index: -1;
+  width: 30%;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(247,242,232,.2), transparent);
+  animation: heritage-book-shimmer 4.8s ease-in-out infinite;
 }
 .heritage-book-trigger--scene:hover .heritage-book-scene-label,
 .heritage-book-trigger--scene:focus-visible .heritage-book-scene-label {
   transform: translateY(-.2rem);
   background: rgba(14,36,54,.9);
+  border-color: rgba(217,189,119,.78);
+}
+
+@keyframes heritage-book-invite {
+  0%, 72%, 100% { box-shadow: 0 .6rem 1.6rem rgba(0,0,0,.28), 0 0 0 rgba(217,189,119,0); }
+  84% { box-shadow: 0 .7rem 1.8rem rgba(0,0,0,.3), 0 0 1.25rem rgba(217,189,119,.2); }
+}
+@keyframes heritage-book-shimmer {
+  0%, 66% { left: -45%; opacity: 0; }
+  72% { opacity: 1; }
+  88% { left: 120%; opacity: .75; }
+  100% { left: 120%; opacity: 0; }
 }
 
 .heritage-book-dialog {
@@ -291,6 +316,7 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .heritage-book-closed, .heritage-book-shadow, .heritage-book-dialog, .heritage-book-spread, .heritage-book-page--left { animation: none; transition: none; }
+  .heritage-book-scene-label, .heritage-book-scene-label::after { animation: none; }
 }
 
 h1,
