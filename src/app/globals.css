@@ -183,15 +183,6 @@ body {
   min-height: 17rem;
   transform: translate(1.2rem, 6.6rem) rotate(-3deg);
 }
-.heritage-book-scene-ring {
-  position: absolute;
-  inset: 3.4rem 1rem 2.2rem;
-  border: 1px solid rgba(230,207,151,.16);
-  border-radius: 1.2rem;
-  opacity: 0;
-  box-shadow: 0 0 0 0 rgba(217,189,119,.22);
-  transition: opacity 300ms ease, box-shadow 500ms var(--ease-entrance), transform 500ms var(--ease-entrance);
-}
 .heritage-book-scene-label {
   position: absolute;
   right: 1.8rem;
@@ -208,12 +199,6 @@ body {
   letter-spacing: .15em;
   text-transform: uppercase;
   transition: background-color 200ms ease, transform 300ms var(--ease-entrance);
-}
-.heritage-book-trigger--scene:hover .heritage-book-scene-ring,
-.heritage-book-trigger--scene:focus-visible .heritage-book-scene-ring {
-  opacity: 1;
-  transform: translateY(-.3rem);
-  box-shadow: 0 0 2.2rem .35rem rgba(217,189,119,.22);
 }
 .heritage-book-trigger--scene:hover .heritage-book-scene-label,
 .heritage-book-trigger--scene:focus-visible .heritage-book-scene-label {
