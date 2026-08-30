@@ -71,10 +71,7 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
         <span className="heritage-book-hint">Explore our story</span>
           </>
         ) : (
-          <>
-            <span className="heritage-book-scene-ring" aria-hidden="true" />
-            <span className="heritage-book-scene-label">Open the heritage book</span>
-          </>
+          <span className="heritage-book-scene-label">Open the heritage book</span>
         )}
       </button>
 
