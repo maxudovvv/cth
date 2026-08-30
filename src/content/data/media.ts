@@ -84,23 +84,18 @@ export const textiles = {
 
 /* ----- Cinematic media slots ----- */
 
-/**
- * The homepage hero uses a muted ping-pong flag loop. Its matching still is the
- * poster and the reduced-motion fallback, so the composition remains stable.
- */
+/** Final approved composition target for the interactive heritage-book intro. */
 export const heroSlot: MediaSlotConfig = {
   slotId: "hero-cinematic",
-  mediaType: "video",
-  futureAnimationSlot: false,
-  fallbackImageSrc: "/media/video/hero-flag-poster.png",
-  reducedMotionImageSrc: "/media/video/hero-flag-poster.png",
-  posterSrc: "/media/video/hero-flag-poster.png",
-  desktopVideoSrc: "/media/video/hero-flag-loop-pingpong.mp4",
+  mediaType: "image",
+  futureAnimationSlot: true,
+  fallbackImageSrc: "/media/pending/hero-book-scene-v2.jpg",
+  reducedMotionImageSrc: "/media/pending/hero-book-scene-v2.jpg",
   objectPosition: "center center",
-  alt: "A cinematic view of the Crimean Tatar flag moving across deep blue fabric.",
+  alt: "A warm Crimean Tatar interior overlooking Bakhchysarai, with coffee, sweets, and a heritage book on the table.",
   decorativeSvg: null,
   priority: true,
-  meta: pendingMeta("User-supplied cinematic Crimean Tatar flag animation"),
+  meta: pendingMeta("AI-assisted concept based on a user-supplied interior video; requires cultural review"),
 };
 
 export const finalCtaSlot: MediaSlotConfig = {

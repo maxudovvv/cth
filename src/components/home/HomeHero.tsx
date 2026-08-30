@@ -178,7 +178,7 @@ export function HomeHero() {
           transition={{ duration: reduceMotion ? 0 : 0.85, delay: reduceMotion ? 0 : 0.72, ease: premiumEase }}
           className="hidden justify-center lg:flex"
         >
-          <HeritageBook />
+          <HeritageBook variant="scene-hotspot" />
         </motion.div>
         </div>
       </motion.div>

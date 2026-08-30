@@ -14,7 +14,11 @@ const chapters = [
   { label: "Donate", href: "/donate", number: "06" },
 ] as const;
 
-export function HeritageBook() {
+type HeritageBookProps = {
+  variant?: "book" | "scene-hotspot";
+};
+
+export function HeritageBook({ variant = "book" }: HeritageBookProps) {
   const [isOpen, setIsOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogTitleId = useId();
@@ -42,8 +46,10 @@ export function HeritageBook() {
         type="button"
         onClick={() => setIsOpen(true)}
         aria-haspopup="dialog"
-        className="heritage-book-trigger group"
+        className={`heritage-book-trigger group ${variant === "scene-hotspot" ? "heritage-book-trigger--scene" : ""}`}
       >
+        {variant === "book" ? (
+          <>
         <span className="heritage-book-shadow" aria-hidden="true" />
         <span className="heritage-book-closed" aria-hidden="true">
           <span className="heritage-book-pages" />
@@ -62,6 +68,13 @@ export function HeritageBook() {
           </span>
         </span>
         <span className="heritage-book-hint">Explore our story</span>
+          </>
+        ) : (
+          <>
+            <span className="heritage-book-scene-ring" aria-hidden="true" />
+            <span className="heritage-book-scene-label">Open the heritage book</span>
+          </>
+        )}
       </button>
 
       {isOpen && (
