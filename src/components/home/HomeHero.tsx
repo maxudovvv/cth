@@ -41,21 +41,10 @@ export function HomeHero() {
 
   const finishIntro = useCallback(() => {
     setIntroPlaying(false);
-    try {
-      window.sessionStorage.setItem("cth-heritage-intro-seen", "true");
-    } catch {
-      // Session storage may be unavailable in strict privacy modes.
-    }
   }, []);
 
   useEffect(() => {
-    try {
-      if (reduceMotion || window.sessionStorage.getItem("cth-heritage-intro-seen")) {
-        setIntroPlaying(false);
-      }
-    } catch {
-      if (reduceMotion) setIntroPlaying(false);
-    }
+    if (reduceMotion) setIntroPlaying(false);
   }, [reduceMotion]);
 
   return (
