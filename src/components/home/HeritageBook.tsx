@@ -71,7 +71,10 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
         <span className="heritage-book-hint">Explore our story</span>
           </>
         ) : (
-          <span className="heritage-book-scene-label">Open the heritage book</span>
+          <>
+            <span className="heritage-book-scene-aura" aria-hidden="true" />
+            <span className="heritage-book-scene-label">Open the heritage book</span>
+          </>
         )}
       </button>
 
@@ -97,6 +100,15 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
           </button>
 
           <div className="heritage-book-open" data-book-open>
+            <div className="heritage-book-opening-cover" aria-hidden="true">
+              <Image
+                src="/media/brand/crimean-tatar-heritage-canada-logo-dark.png"
+                alt=""
+                width={112}
+                height={112}
+              />
+              <span>Crimean Tatar<br />Heritage Canada</span>
+            </div>
             <div className="heritage-book-spread">
               <section className="heritage-book-page heritage-book-page--left">
                 <p className="heritage-book-page-kicker">Welcome</p>
