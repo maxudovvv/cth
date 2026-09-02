@@ -4,7 +4,7 @@ import { Section, Eyebrow } from "@/components/ui/Primitives";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { AnimatedHeading } from "@/components/motion/AnimatedHeading";
 import { MediaSlot } from "@/components/media/MediaSlot";
-import { surgunlikSlot, community } from "@/content/data/media";
+import { surgunlikSlot } from "@/content/data/media";
 
 export const metadata: Metadata = {
   title: "About Crimean Tatars",
@@ -26,8 +26,9 @@ export default function AboutCrimeanTatarsPage() {
         eyebrow="About the Crimean Tatars"
         title="An Indigenous people of Crimea"
         intro="A short, factual introduction to the Crimean Tatars — their heritage, and why preserving it matters."
-        bgImage={community.paradeWalk}
-        objectPosition="center 30%"
+        bgImage="/media/video/about-crimean-tatars-hero-poster.jpg"
+        bgVideo="/media/video/about-crimean-tatars-hero-loop.mp4"
+        objectPosition="center"
       />
 
       {/* Who */}
