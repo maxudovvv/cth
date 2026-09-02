@@ -76,7 +76,7 @@ export function GalleryGrid() {
               ref={(node) => { triggerRefs.current[i] = node; }}
               type="button"
               onClick={() => setOpen(i)}
-              className="group relative block w-full cursor-zoom-in overflow-hidden rounded-2xl ring-1 ring-line shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-4 focus-visible:ring-offset-ivory"
+              className="gallery-card group relative block w-full cursor-zoom-in overflow-hidden rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-4 focus-visible:ring-offset-ivory"
               aria-label={`Open image: ${g.alt}`}
             >
               <span className="relative block aspect-[4/3] w-full">
@@ -86,13 +86,27 @@ export function GalleryGrid() {
                   fill
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
                   loading="lazy"
-                  className="object-cover transition-transform duration-[700ms] ease-entrance group-hover:scale-[1.025]"
+                  className="gallery-card__image object-cover"
                   style={{ objectPosition: g.objectPosition ?? "center" }}
                 />
-                <span aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/45 to-transparent opacity-0 transition-opacity duration-base group-hover:opacity-100" />
+                <span aria-hidden="true" className="gallery-card__veil pointer-events-none absolute inset-0" />
+                <span aria-hidden="true" className="gallery-card__glint pointer-events-none absolute inset-0" />
+                <span className="gallery-card__caption pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-5 p-5 text-left text-ivory">
+                  <span className="min-w-0">
+                    <span className="block text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-gold-light">
+                      Community archive
+                    </span>
+                    <span className="gallery-card__description mt-1.5 line-clamp-2 block text-sm leading-snug text-ivory/90">
+                      {g.alt}
+                    </span>
+                  </span>
+                  <span className="gallery-card__number shrink-0 font-serif text-2xl text-ivory/55" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </span>
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute bottom-4 right-4 grid h-11 w-11 translate-y-2 place-items-center rounded-full border border-white/25 bg-navy/70 text-ivory opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+                  className="gallery-card__zoom pointer-events-none absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full border border-white/25 bg-navy/70 text-ivory shadow-lg backdrop-blur-md"
                 >
                   <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
                     <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.6" />
