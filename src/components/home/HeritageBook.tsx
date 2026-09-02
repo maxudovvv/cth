@@ -73,6 +73,15 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
         ) : (
           <>
             <span className="heritage-book-scene-aura" aria-hidden="true" />
+            <span className="heritage-book-scene-object" aria-hidden="true">
+              <Image
+                src="/media/interactive/heritage-book-cutout.png"
+                alt=""
+                width={302}
+                height={225}
+                priority
+              />
+            </span>
             <span className="heritage-book-scene-label">Open the heritage book</span>
           </>
         )}
