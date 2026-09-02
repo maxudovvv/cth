@@ -67,8 +67,8 @@ export default function OurActivitiesPage() {
         eyebrow="Our Activities"
         title="Cultural work, across Canada"
         intro="The programs and projects through which we preserve and share Crimean Tatar heritage."
-        bgImage={culturalMedia.galleryEvent}
-        objectPosition="center 48%"
+        bgImage="/media/hero/our-activities-workshop.jpg"
+        objectPosition="center"
       >
         <nav aria-label="Activity categories" className="mt-8 flex flex-wrap gap-3">
           {[
