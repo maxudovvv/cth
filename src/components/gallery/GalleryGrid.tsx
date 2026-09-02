@@ -126,22 +126,25 @@ export function GalleryGrid() {
             role="dialog"
             aria-modal="true"
             aria-label="Image viewer"
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-navy/90 p-3 backdrop-blur-xl sm:p-8"
+            className="gallery-lightbox fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden px-3 py-20 sm:px-16 sm:py-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reduce ? 0 : 0.25 }}
             onClick={close}
           >
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(27,159,181,0.13),transparent_50%)]" />
-            <div className="absolute left-4 top-4 z-10 rounded-full border border-white/15 bg-black/20 px-4 py-2 text-xs font-semibold tracking-[0.16em] text-ivory/80 backdrop-blur-md sm:left-8 sm:top-7">
+            <div aria-hidden="true" className="gallery-lightbox__ambient absolute inset-[-3rem]">
+              <Image src={current.src} alt="" fill sizes="100vw" className="object-cover" />
+            </div>
+            <div aria-hidden="true" className="gallery-lightbox__scrim pointer-events-none absolute inset-0" />
+            <div className="absolute left-4 top-4 z-20 rounded-full border border-white/15 bg-[#071827]/80 px-4 py-2 text-xs font-semibold tracking-[0.16em] text-white/75 shadow-lg backdrop-blur-md sm:left-8 sm:top-7">
               {String(open! + 1).padStart(2, "0")} / {String(galleryStills.length).padStart(2, "0")}
             </div>
             <button
               ref={closeRef}
               type="button"
               onClick={close}
-              className="absolute right-4 top-4 z-10 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-ivory backdrop-blur-md transition hover:rotate-90 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:right-8 sm:top-7"
+              className="absolute right-4 top-4 z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-gold/60 bg-[#071827]/85 text-white shadow-lg backdrop-blur-md transition hover:rotate-90 hover:border-gold hover:bg-[#10283a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:right-8 sm:top-7"
               aria-label="Close viewer"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -151,7 +154,7 @@ export function GalleryGrid() {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); show(-1); }}
-              className="absolute bottom-5 left-4 z-10 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-ivory backdrop-blur-md transition hover:-translate-x-1 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:bottom-auto sm:left-8"
+              className="gallery-lightbox__nav gallery-lightbox__nav--previous absolute z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-[#071827]/85 text-white shadow-xl backdrop-blur-md transition hover:-translate-x-1 hover:border-gold/70 hover:bg-[#10283a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:h-14 sm:w-14"
               aria-label="Previous image"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -159,7 +162,7 @@ export function GalleryGrid() {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); show(1); }}
-              className="absolute bottom-5 right-4 z-10 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-ivory backdrop-blur-md transition hover:translate-x-1 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:bottom-auto sm:right-8"
+              className="gallery-lightbox__nav gallery-lightbox__nav--next absolute z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-[#071827]/85 text-white shadow-xl backdrop-blur-md transition hover:translate-x-1 hover:border-gold/70 hover:bg-[#10283a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:h-14 sm:w-14"
               aria-label="Next image"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -167,14 +170,14 @@ export function GalleryGrid() {
 
             <motion.figure
               key={current.src}
-              className="relative max-h-[88vh] w-full max-w-6xl"
+              className="gallery-lightbox__figure relative z-10 w-full max-w-6xl"
               initial={reduce ? { opacity: 1 } : { opacity: 0, y: 28, scale: 0.965 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: -14, scale: 0.985 }}
               transition={{ duration: reduce ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative mx-auto h-[72vh] w-full overflow-hidden rounded-[1.4rem] border border-white/10 bg-black/20 shadow-[0_32px_90px_rgba(0,0,0,0.55)] sm:h-[78vh]">
+              <div className="gallery-lightbox__frame relative mx-auto w-full overflow-hidden rounded-[1.15rem] border border-white/15 bg-[#030a11]/75 shadow-[0_35px_100px_rgba(0,0,0,0.68)]">
                 <Image
                   src={current.src}
                   alt={current.alt}
@@ -184,7 +187,10 @@ export function GalleryGrid() {
                   style={{ objectPosition: "center" }}
                 />
               </div>
-              <figcaption className="mx-auto mt-4 max-w-3xl px-14 text-center text-sm leading-relaxed text-ivory/80 sm:px-0">{current.alt}</figcaption>
+              <figcaption className="gallery-lightbox__caption mx-auto mt-4 max-w-3xl px-14 text-center text-sm leading-relaxed text-white/80 sm:px-0">
+                <span className="mr-3 text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-gold-light">Archive</span>
+                {current.alt}
+              </figcaption>
             </motion.figure>
           </motion.div>
           )}
