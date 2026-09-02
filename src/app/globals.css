@@ -182,6 +182,31 @@ body {
   width: min(24rem, 29vw);
   min-height: 17rem;
   transform: translate(-3.75rem, 12rem) rotate(-3deg);
+  transform-style: preserve-3d;
+  transition: transform 700ms var(--ease-entrance), filter 700ms var(--ease-entrance);
+}
+.heritage-book-scene-aura {
+  position: absolute;
+  right: 2.3rem;
+  bottom: 2.7rem;
+  width: 12.5rem;
+  height: 6.2rem;
+  border-radius: 42%;
+  opacity: 0;
+  background: radial-gradient(ellipse, rgba(226,194,94,.3), rgba(196,151,54,.09) 48%, transparent 72%);
+  filter: blur(12px);
+  transform: scale(.82);
+  transition: opacity 650ms ease, transform 750ms var(--ease-entrance);
+}
+.heritage-book-trigger--scene:hover,
+.heritage-book-trigger--scene:focus-visible {
+  transform: translate(-4.25rem, 11.35rem) rotate(-2deg) scale(1.035);
+  filter: drop-shadow(0 1rem 1.5rem rgba(0,0,0,.18));
+}
+.heritage-book-trigger--scene:hover .heritage-book-scene-aura,
+.heritage-book-trigger--scene:focus-visible .heritage-book-scene-aura {
+  opacity: 1;
+  transform: scale(1.08);
 }
 .heritage-book-scene-label {
   position: absolute;
@@ -261,14 +286,60 @@ body {
   text-transform: uppercase;
 }
 .heritage-book-close span:first-child { font-size: 1.25rem; line-height: 1; }
-.heritage-book-open { width: min(68rem, 94vw); perspective: 1800px; }
+.heritage-book-open { position: relative; width: min(68rem, 94vw); perspective: 1800px; }
+.heritage-book-opening-cover {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(217,189,119,.58);
+  border-radius: 0 .72rem .72rem 0;
+  color: var(--color-ivory);
+  background: radial-gradient(circle at 35% 25%, #294a61, #10283a 45%, #071925 100%);
+  box-shadow: inset 0 0 0 .55rem #0b2030, inset 0 0 0 .63rem rgba(217,189,119,.42), -1rem 1.5rem 3rem rgba(0,0,0,.28);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  animation: book-cover-open 1.25s var(--ease-entrance) .12s both;
+}
+.heritage-book-opening-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .15;
+  background-image: radial-gradient(rgba(255,255,255,.5) .5px, transparent .5px);
+  background-size: 3px 3px;
+}
+.heritage-book-opening-cover img {
+  position: relative;
+  z-index: 1;
+  width: 5.4rem;
+  height: 5.4rem;
+  object-fit: contain;
+  filter: sepia(1) saturate(.75) brightness(1.7);
+}
+.heritage-book-opening-cover span {
+  position: relative;
+  z-index: 1;
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.4vw, 2rem);
+  line-height: 1.12;
+  text-align: center;
+}
 .heritage-book-spread {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: min(38rem, 76vh);
   filter: drop-shadow(0 2rem 3rem rgba(0,0,0,.48));
   transform-origin: center bottom;
-  animation: book-spread-in 950ms var(--ease-entrance) both;
+  animation: book-spread-in 1s var(--ease-entrance) .2s both;
 }
 .heritage-book-page {
   position: relative;
@@ -296,6 +367,11 @@ body {
 @keyframes book-backdrop-in { from { opacity: 0; } }
 @keyframes book-spread-in { from { opacity: 0; transform: translateY(2.5rem) scale(.84) rotateX(12deg); } to { opacity: 1; transform: none; } }
 @keyframes book-left-open { from { transform: rotateY(84deg); filter: brightness(.65); } to { transform: rotateY(0); filter: none; } }
+@keyframes book-cover-open {
+  0% { opacity: 1; transform: rotateY(0deg); filter: brightness(.85); }
+  72% { opacity: 1; transform: rotateY(-168deg); filter: brightness(1); }
+  100% { opacity: 0; transform: rotateY(-178deg); visibility: hidden; }
+}
 
 @media (max-width: 1023px) {
   .heritage-book-trigger { width: 11rem; min-height: 8.2rem; }
@@ -313,10 +389,14 @@ body {
   .heritage-book-page { min-height: 30rem; padding: 2.2rem 1.7rem 3.5rem; }
   .heritage-book-page--left { display: none; }
   .heritage-book-page--right { border-radius: .55rem; }
+  .heritage-book-opening-cover { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .heritage-book-closed, .heritage-book-shadow, .heritage-book-dialog, .heritage-book-spread, .heritage-book-page--left { animation: none; transition: none; }
   .heritage-book-scene-label, .heritage-book-scene-label::after { animation: none; }
+  .heritage-book-trigger--scene { transition: none; filter: none; }
+  .heritage-book-scene-aura { display: none; }
+  .heritage-book-opening-cover { display: none; }
 }
 
 h1,
@@ -691,6 +771,75 @@ p {
   opacity: 0;
   transform: translateY(-8px) scale(0.92);
   transition: opacity 360ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Immersive gallery viewer: the photograph stays central and controls remain legible. */
+.gallery-lightbox {
+  background: #061421;
+}
+
+.gallery-lightbox__ambient {
+  opacity: 0.22;
+  filter: blur(46px) saturate(0.8);
+  transform: scale(1.08);
+}
+
+.gallery-lightbox__scrim {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(19, 57, 78, 0.18), transparent 58%),
+    linear-gradient(to bottom, rgba(3, 12, 21, 0.7), rgba(3, 12, 21, 0.92));
+}
+
+.gallery-lightbox__figure {
+  max-height: calc(100dvh - 8rem);
+}
+
+.gallery-lightbox__frame {
+  height: min(72dvh, 780px);
+}
+
+.gallery-lightbox__nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gallery-lightbox__nav--previous { left: 1.5rem; }
+.gallery-lightbox__nav--next { right: 1.5rem; }
+
+@media (max-width: 639px) {
+  .gallery-lightbox {
+    padding-top: 4.75rem;
+    padding-bottom: 5.5rem;
+  }
+
+  .gallery-lightbox__ambient {
+    opacity: 0.14;
+    filter: blur(34px) saturate(0.75);
+  }
+
+  .gallery-lightbox__figure {
+    max-height: calc(100dvh - 9rem);
+  }
+
+  .gallery-lightbox__frame {
+    height: min(66dvh, 620px);
+    border-radius: 0.85rem;
+  }
+
+  .gallery-lightbox__nav {
+    top: auto;
+    bottom: 1rem;
+    transform: none;
+  }
+
+  .gallery-lightbox__nav--previous { left: calc(50% - 3.5rem); }
+  .gallery-lightbox__nav--next { right: calc(50% - 3.5rem); }
+
+  .gallery-lightbox__caption {
+    margin-top: 0.8rem;
+    padding-inline: 0.5rem;
+    font-size: 0.82rem;
+  }
 }
 
 /* Museum-style interaction for the cultural showcase in Who We Are. */
