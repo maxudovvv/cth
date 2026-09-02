@@ -648,6 +648,51 @@ p {
     box-shadow var(--dur-base) var(--ease-entrance);
 }
 
+/* Gallery cards: museum-label detail with motion reserved for precise pointers. */
+.gallery-card {
+  border: 1px solid rgba(12, 35, 55, 0.13);
+  background: #0b1b2b;
+  box-shadow: 0 10px 28px rgba(5, 17, 30, 0.13);
+  isolation: isolate;
+  transition:
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-card__image {
+  transform: scale(1.002);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1), filter 600ms ease;
+}
+
+.gallery-card__veil {
+  background: linear-gradient(to top, rgba(5, 17, 30, 0.84), rgba(5, 17, 30, 0.04) 58%);
+  opacity: 0.42;
+  transition: opacity 500ms ease;
+}
+
+.gallery-card__glint {
+  background: linear-gradient(112deg, transparent 28%, rgba(235, 211, 150, 0.18) 48%, transparent 68%);
+  transform: translateX(-125%);
+}
+
+.gallery-card__caption {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 420ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-card__number {
+  transform: translateX(6px);
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1), color 420ms ease;
+}
+
+.gallery-card__zoom {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.92);
+  transition: opacity 360ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* Museum-style interaction for the cultural showcase in Who We Are. */
 .heritage-showcase-card {
   border: 1px solid rgba(217, 189, 119, 0.22);
@@ -757,6 +802,44 @@ p {
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .gallery-card:hover,
+  .gallery-card:focus-visible {
+    transform: translateY(-7px);
+    border-color: rgba(196, 151, 54, 0.55);
+    box-shadow: 0 22px 48px rgba(5, 17, 30, 0.22), 0 0 0 1px rgba(217, 189, 119, 0.12);
+  }
+
+  .gallery-card:hover .gallery-card__image,
+  .gallery-card:focus-visible .gallery-card__image {
+    transform: scale(1.065);
+    filter: saturate(1.06) contrast(1.02);
+  }
+
+  .gallery-card:hover .gallery-card__veil,
+  .gallery-card:focus-visible .gallery-card__veil {
+    opacity: 1;
+  }
+
+  .gallery-card:hover .gallery-card__glint,
+  .gallery-card:focus-visible .gallery-card__glint {
+    transform: translateX(125%);
+    transition: transform 1050ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .gallery-card:hover .gallery-card__caption,
+  .gallery-card:focus-visible .gallery-card__caption,
+  .gallery-card:hover .gallery-card__zoom,
+  .gallery-card:focus-visible .gallery-card__zoom {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .gallery-card:hover .gallery-card__number,
+  .gallery-card:focus-visible .gallery-card__number {
+    color: #e7cf91;
+    transform: translateX(0);
+  }
+
   .heritage-showcase-card__subtitle {
     opacity: 0;
     transform: translateY(8px);
@@ -789,6 +872,23 @@ p {
   .heritage-showcase-card:focus-visible .heritage-showcase-card__subtitle {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .gallery-card__caption {
+    opacity: 1;
+    transform: none;
+  }
+
+  .gallery-card__description,
+  .gallery-card__zoom,
+  .gallery-card__glint {
+    display: none;
+  }
+
+  .gallery-card__veil {
+    opacity: 0.58;
   }
 }
 @media (hover: hover) and (pointer: fine) {
