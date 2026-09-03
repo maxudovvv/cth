@@ -5,6 +5,7 @@ import { Section, Eyebrow, ButtonLink } from "@/components/ui/Primitives";
 import { ImageReveal, Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { AnimatedHeading } from "@/components/motion/AnimatedHeading";
 import { MediaSlot } from "@/components/media/MediaSlot";
+import { PhotoLightbox } from "@/components/media/PhotoLightbox";
 import { OrnamentDivider } from "@/components/ornament/Ornament";
 import { organization } from "@/content/data/site";
 import {
@@ -76,8 +77,8 @@ export default function HomePage() {
       </section>
 
       {/* About Crimean Tatars preview */}
-      <Section tone="ivory" aria-labelledby="actatars-title">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+      <Section tone="ivory" aria-labelledby="actatars-title" className="py-10 md:py-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
           <StaggerGroup className="order-2 lg:order-1">
             <StaggerItem><Eyebrow>About the Crimean Tatars</Eyebrow></StaggerItem>
             <StaggerItem><AnimatedHeading id="actatars-title" className="mt-3 text-3xl md:text-4xl">
@@ -93,8 +94,12 @@ export default function HomePage() {
             </StaggerItem>
           </StaggerGroup>
           <ImageReveal className="order-1 lg:order-2">
-            <div className="group relative overflow-hidden rounded-3xl shadow-soft">
-              <div className="relative aspect-[5/6] w-full">
+            <PhotoLightbox
+              src={community.boatFlag}
+              alt="Community members with the Crimean Tatar flag by the water in Canada."
+              className="relative w-full rounded-3xl shadow-soft focus-visible:ring-offset-ivory"
+            >
+              <div className="relative aspect-[16/9] w-full">
                 <Image
                   src={community.boatFlag}
                   alt="Community members with the Crimean Tatar flag by the water in Canada (provisional, pending permission)."
@@ -102,11 +107,11 @@ export default function HomePage() {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   loading="lazy"
                   className="object-cover transition-transform duration-[700ms] ease-entrance group-hover:scale-[1.025]"
-                  style={{ objectPosition: "center 40%" }}
+                  style={{ objectPosition: "center 52%" }}
                 />
                 <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
               </div>
-            </div>
+            </PhotoLightbox>
           </ImageReveal>
         </div>
       </Section>
@@ -149,7 +154,8 @@ export default function HomePage() {
               key={g.src}
               className="group relative overflow-hidden rounded-2xl ring-1 ring-line shadow-soft"
             >
-              <div className="relative aspect-[4/3] w-full">
+              <PhotoLightbox src={g.src} alt={g.alt} className="relative w-full focus-visible:ring-offset-sand">
+              <span className="relative block aspect-[4/3] w-full">
                 <Image
                   src={g.src}
                   alt={g.alt}
@@ -160,7 +166,8 @@ export default function HomePage() {
                   style={{ objectPosition: g.objectPosition ?? "center" }}
                 />
                 <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/45 to-transparent opacity-60 transition-opacity duration-base group-hover:opacity-80" />
-              </div>
+              </span>
+              </PhotoLightbox>
             </StaggerItem>
           ))}
         </StaggerGroup>

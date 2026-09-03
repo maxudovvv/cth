@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Section, Eyebrow, ButtonLink } from "@/components/ui/Primitives";
+import { Section, Eyebrow } from "@/components/ui/Primitives";
 import { StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { AnimatedHeading } from "@/components/motion/AnimatedHeading";
+import { DonationForm } from "@/components/donate/DonationForm";
 
 export const metadata: Metadata = {
   title: "Support Crimean Tatar Heritage Canada",
   description:
-    "Support Crimean Tatar Heritage Canada. Online donations will be available soon — contact us about supporting our work.",
+    "Make a one-time or monthly contribution to support Crimean Tatar heritage in Canada.",
 };
 
 const uses = [
@@ -44,17 +45,8 @@ export default function DonatePage() {
             ))}
           </StaggerGroup>
 
-          <div className="mt-10 rounded-2xl border border-line bg-ivory-dim/60 p-7 text-center">
-            <p className="font-display text-xl text-navy">Online donations will be available soon.</p>
-            <p className="mt-2 text-navy-600">
-              In the meantime, please reach out and we will be glad to talk about ways to
-              support our work.
-            </p>
-            <div className="mt-6 flex justify-center">
-              <ButtonLink href="/contact" variant="solid">
-                Contact Us About Supporting Our Work
-              </ButtonLink>
-            </div>
+          <div className="mt-10">
+            <DonationForm />
           </div>
         </div>
       </Section>
