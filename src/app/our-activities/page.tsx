@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Section, Eyebrow, ButtonLink } from "@/components/ui/Primitives";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { AnimatedHeading } from "@/components/motion/AnimatedHeading";
+import { PhotoLightbox } from "@/components/media/PhotoLightbox";
 import { community, culturalMedia, workshopMedia } from "@/content/data/media";
 
 export const metadata: Metadata = {
@@ -101,6 +102,11 @@ export default function OurActivitiesPage() {
           </Reveal>
 
           <Reveal className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-lift">
+            <PhotoLightbox
+              src={workshopMedia.cookingClass}
+              alt="Participants preparing traditional Crimean Tatar food during a community cooking workshop."
+              className="absolute inset-0 w-full focus-visible:ring-offset-sand"
+            >
             <Image
               src={workshopMedia.cookingClass}
               alt="Participants preparing traditional Crimean Tatar food during a community cooking workshop."
@@ -112,6 +118,7 @@ export default function OurActivitiesPage() {
             <p className="absolute bottom-5 left-5 max-w-sm text-sm font-semibold text-ivory md:text-base">
               Cooking together turns recipes into living, shared memory.
             </p>
+            </PhotoLightbox>
           </Reveal>
         </div>
 
@@ -137,17 +144,17 @@ export default function OurActivitiesPage() {
             },
           ].map((item) => (
             <StaggerItem key={item.title} className="overflow-hidden rounded-2xl bg-ivory shadow-soft ring-1 ring-line">
-              <div className="relative aspect-[4/3]">
+              <PhotoLightbox src={item.img} alt={item.title} className="relative aspect-[4/3] w-full focus-visible:ring-offset-sand">
                 <Image
                   src={item.img}
                   alt={item.title}
                   fill
                   sizes="(max-width: 768px) 90vw, 30vw"
                   loading="lazy"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-slow ease-entrance group-hover:scale-[1.035]"
                   style={{ objectPosition: item.pos }}
                 />
-              </div>
+              </PhotoLightbox>
               <div className="p-5">
                 <h3 className="font-display text-xl text-navy">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-navy-600">{item.text}</p>
@@ -178,8 +185,10 @@ export default function OurActivitiesPage() {
                 className={index === 0 ? "md:col-span-2" : index === 2 ? "md:col-span-3" : ""}
               >
                 <article className="group h-full overflow-hidden rounded-2xl border border-ivory/15 bg-ivory/[0.06]">
-                  <div
-                    className={`relative ${
+                  <PhotoLightbox
+                    src={item.img}
+                    alt={item.title}
+                    className={`relative w-full focus-visible:ring-offset-navy ${
                       index === 0 ? "aspect-[16/9]" : index === 2 ? "aspect-[21/8]" : "aspect-[4/5]"
                     }`}
                   >
@@ -199,7 +208,7 @@ export default function OurActivitiesPage() {
                       style={{ objectPosition: item.pos }}
                     />
                     <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent" />
-                  </div>
+                  </PhotoLightbox>
                   <div className="p-6">
                     <h3 className="font-display text-2xl text-ivory">{item.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-ivory/75">{item.text}</p>
@@ -227,7 +236,7 @@ export default function OurActivitiesPage() {
           {culturalActivities.map((item) => (
             <StaggerItem key={item.title}>
               <article className="group grid gap-5 sm:grid-cols-[0.9fr_1.1fr] sm:items-center">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-soft">
+                <PhotoLightbox src={item.img} alt={item.title} className="relative aspect-[4/3] w-full rounded-2xl shadow-soft focus-visible:ring-offset-ivory">
                   <Image
                     src={item.img}
                     alt={item.title}
@@ -237,7 +246,7 @@ export default function OurActivitiesPage() {
                     className="object-cover transition-transform duration-slow ease-entrance group-hover:scale-[1.04]"
                     style={{ objectPosition: item.pos }}
                   />
-                </div>
+                </PhotoLightbox>
                 <div>
                   <h3 className="font-display text-2xl text-navy">{item.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-navy-600">{item.text}</p>
