@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-mot
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { culturalMedia, textiles } from "@/content/data/media";
 import { premiumEase } from "@/lib/motion";
+import { PhotoLightbox } from "@/components/media/PhotoLightbox";
 
 const archiveItems = [
   {
@@ -47,7 +48,11 @@ function ArchiveVisual({ index, reduced }: { index: number; reduced: boolean }) 
         transition={transition}
         className="absolute inset-0 flex items-center justify-center"
       >
-        <div className="relative h-full w-full overflow-hidden rounded-2xl ring-1 ring-white/10">
+        <PhotoLightbox
+          src={item.image}
+          alt={item.alt}
+          className="relative h-full w-full rounded-2xl ring-1 ring-white/10 focus-visible:ring-offset-navy"
+        >
           <Image
             src={item.image}
             alt={item.alt}
@@ -61,7 +66,7 @@ function ArchiveVisual({ index, reduced }: { index: number; reduced: boolean }) 
             <span className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-soft">{item.label}</span>
             <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 border border-gold/60" />
           </div>
-        </div>
+        </PhotoLightbox>
       </motion.div>
     </AnimatePresence>
   );
