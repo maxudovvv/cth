@@ -4,6 +4,7 @@ import { Section, Eyebrow } from "@/components/ui/Primitives";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { AnimatedHeading } from "@/components/motion/AnimatedHeading";
 import { MediaSlot } from "@/components/media/MediaSlot";
+import { PhotoLightbox } from "@/components/media/PhotoLightbox";
 import { surgunlikSlot } from "@/content/data/media";
 
 export const metadata: Metadata = {
@@ -70,12 +71,18 @@ export default function AboutCrimeanTatarsPage() {
         <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <Reveal>
             <div className="mx-auto max-w-[16rem]">
+              <PhotoLightbox
+                src={surgunlikSlot.fallbackImageSrc}
+                alt={surgunlikSlot.alt}
+                className="w-full rounded-2xl focus-visible:ring-offset-navy"
+              >
               <MediaSlot
                 config={surgunlikSlot}
                 className="aspect-[4/5] w-full ring-1 ring-ivory/15"
                 sizes="(max-width: 1024px) 60vw, 16rem"
                 eager
               />
+              </PhotoLightbox>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
