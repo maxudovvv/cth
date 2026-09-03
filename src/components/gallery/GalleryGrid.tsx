@@ -154,7 +154,7 @@ export function GalleryGrid() {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); show(-1); }}
-              className="gallery-lightbox__nav gallery-lightbox__nav--previous absolute z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-[#071827]/85 text-white shadow-xl backdrop-blur-md transition hover:-translate-x-1 hover:border-gold/70 hover:bg-[#10283a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:h-14 sm:w-14"
+              className="gallery-lightbox__nav gallery-lightbox__nav--previous absolute z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-[#071827]/85 text-white shadow-xl backdrop-blur-md transition-colors hover:border-gold/70 hover:bg-[#10283a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:h-14 sm:w-14"
               aria-label="Previous image"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -162,7 +162,7 @@ export function GalleryGrid() {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); show(1); }}
-              className="gallery-lightbox__nav gallery-lightbox__nav--next absolute z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-[#071827]/85 text-white shadow-xl backdrop-blur-md transition hover:translate-x-1 hover:border-gold/70 hover:bg-[#10283a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:h-14 sm:w-14"
+              className="gallery-lightbox__nav gallery-lightbox__nav--next absolute z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-[#071827]/85 text-white shadow-xl backdrop-blur-md transition-colors hover:border-gold/70 hover:bg-[#10283a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:h-14 sm:w-14"
               aria-label="Next image"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" /></svg>
