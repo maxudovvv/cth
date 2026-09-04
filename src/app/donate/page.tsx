@@ -27,6 +27,9 @@ export default function DonatePage() {
         eyebrow="Support"
         title="Support Crimean Tatar Heritage Canada"
         intro="Help preserve and share Crimean Tatar heritage with communities across Canada."
+        bgImage="/media/hero/donate-heritage-support.jpg"
+        bgAlt="Crimean Tatar heritage objects, family photographs, embroidery, and coffee beside a sunlit window."
+        objectPosition="center"
       />
 
       <Section tone="ivory" aria-labelledby="donate-title">
