@@ -16,7 +16,7 @@ const chapters = [
 ] as const;
 
 type HeritageBookProps = {
-  variant?: "book" | "scene-hotspot";
+  variant?: "book" | "scene-hotspot" | "mobile-hotspot";
 };
 
 export function HeritageBook({ variant = "book" }: HeritageBookProps) {
@@ -47,7 +47,8 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
         type="button"
         onClick={() => setIsOpen(true)}
         aria-haspopup="dialog"
-        className={`heritage-book-trigger group ${variant === "scene-hotspot" ? "heritage-book-trigger--scene" : ""}`}
+        aria-label={variant === "mobile-hotspot" ? "Open the heritage book" : undefined}
+        className={`heritage-book-trigger group ${variant === "scene-hotspot" ? "heritage-book-trigger--scene" : ""} ${variant === "mobile-hotspot" ? "heritage-book-trigger--mobile-hotspot" : ""}`}
       >
         {variant === "book" ? (
           <>
@@ -70,12 +71,12 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
         </span>
         <span className="heritage-book-hint">Explore our story</span>
           </>
-        ) : (
+        ) : variant === "scene-hotspot" ? (
           <>
             <span className="heritage-book-scene-aura" aria-hidden="true" />
             <span className="heritage-book-scene-label">Open the heritage book</span>
           </>
-        )}
+        ) : null}
       </button>
 
       {isOpen && createPortal(

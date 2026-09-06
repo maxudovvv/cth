@@ -49,8 +49,9 @@ export function HomeHero() {
         style={{ y: mediaY }}
       >
         {!reduceMotion ? (
+          <>
           <video
-            className="h-full w-full object-cover"
+            className="hidden h-full w-full object-cover md:block"
             style={{ objectPosition: heroSlot.objectPosition ?? "center" }}
             autoPlay
             muted
@@ -63,6 +64,16 @@ export function HomeHero() {
           >
             <source src={heroSlot.desktopVideoSrc} type="video/mp4" />
           </video>
+          <Image
+            src="/media/generated/home-hero-mobile-v2.jpg"
+            alt={heroSlot.alt}
+            fill
+            priority
+            sizes="(max-width: 767px) 100vw, 1px"
+            className="object-cover md:hidden"
+            style={{ objectPosition: "center center" }}
+          />
+          </>
         ) : (
           <Image
             src={heroSlot.fallbackImageSrc}
@@ -202,8 +213,8 @@ export function HomeHero() {
         </div>
       </motion.div>
 
-      <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 justify-center sm:bottom-6 lg:hidden">
-        <HeritageBook />
+      <div className="absolute bottom-0 left-0 z-20 h-[31%] w-[67%] md:hidden">
+        <HeritageBook variant="mobile-hotspot" />
       </div>
 
       <motion.div
