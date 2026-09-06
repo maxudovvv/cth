@@ -85,9 +85,9 @@ export default function HomePage() {
               An Indigenous people of Crimea
             </AnimatedHeading></StaggerItem>
             <StaggerItem><p className="mt-5 max-w-prose text-ink/85">
-              The Crimean Tatars are a Turkic people native to the Crimean Peninsula, with a
-              distinctive language, music, cuisine, craft, and a history marked by resilience
-              and memory. Learn who they are and why preserving this heritage matters.
+              The Crimean Tatars are an Indigenous people of Crimea, whose identity, language
+              and culture were formed on the Crimean Peninsula over many centuries. Their
+              homeland, culture and historical identity are deeply rooted in Crimea.
             </p></StaggerItem>
             <StaggerItem className="mt-7">
               <ButtonLink href="/about-crimean-tatars" variant="solid">Discover the heritage</ButtonLink>

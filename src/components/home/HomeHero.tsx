@@ -202,7 +202,7 @@ export function HomeHero() {
         </div>
       </motion.div>
 
-      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 justify-center lg:hidden">
+      <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 justify-center sm:bottom-6 lg:hidden">
         <HeritageBook />
       </div>
 

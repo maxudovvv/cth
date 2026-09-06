@@ -10,7 +10,7 @@ import { surgunlikSlot } from "@/content/data/media";
 export const metadata: Metadata = {
   title: "About Crimean Tatars",
   description:
-    "Who the Crimean Tatars are — an educational overview of their history, culture, language, traditions, arts, cuisine, and historical memory.",
+    "Who the Crimean Tatars are — an Indigenous people of Crimea whose identity, language, culture, and history are deeply rooted in the Crimean Peninsula.",
 };
 
 const facets = [
@@ -24,9 +24,9 @@ export default function AboutCrimeanTatarsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="About the Crimean Tatars"
-        title="An Indigenous people of Crimea"
-        intro="A short, factual introduction to the Crimean Tatars — their heritage, and why preserving it matters."
+        eyebrow="Who are the Crimean Tatars?"
+        title="An Indigenous People of Crimea"
+        intro="The Crimean Tatars are an Indigenous people of Crimea, whose identity, language and culture were formed on the Crimean Peninsula over many centuries."
         bgImage="/media/video/about-crimean-tatars-hero-poster.jpg"
         bgVideo="/media/video/about-crimean-tatars-hero-loop.mp4"
         objectPosition="center"
@@ -35,17 +35,33 @@ export default function AboutCrimeanTatarsPage() {
       {/* Who */}
       <Section tone="ivory" aria-labelledby="who-title">
         <div className="mx-auto max-w-prose">
-          <Eyebrow>Who they are</Eyebrow>
-          <AnimatedHeading id="who-title" className="mt-3 text-3xl md:text-4xl">A Turkic people native to the Crimean Peninsula</AnimatedHeading>
+          <Eyebrow>Origins &amp; identity</Eyebrow>
+          <AnimatedHeading id="who-title" className="mt-3 text-3xl md:text-4xl">A people deeply rooted in Crimea</AnimatedHeading>
           <p className="mt-5 text-lg leading-relaxed text-ink/85">
-            The Crimean Tatars are a Turkic ethnic group Indigenous to Crimea, on the northern
-            coast of the Black Sea. Over centuries they developed a distinctive language,
-            music, cuisine, craft, and religious and communal life. Today Crimean Tatar
-            communities live in Crimea and in a diaspora that includes Canada.
+            Their ethnogenesis reflects Crimea&apos;s unique history as a crossroads of civilizations.
+            Over successive historical periods, the peninsula was home to ancient peoples and
+            communities including the Taurians, Scythians, Greeks, Goths, Alans and Khazars,
+            followed by various Turkic peoples, including the Kipchaks, as well as populations
+            associated with the Golden Horde and the Genoese presence on the Crimean coast.
           </p>
           <p className="mt-4 leading-relaxed text-ink/85">
-            This overview is written for a general Canadian audience. It aims to be accessible
-            and respectful; detailed sourcing and citations are being prepared.
+            Over centuries, interaction among these populations contributed to the emergence of
+            the distinct Crimean Tatar people, whose homeland, language, culture and historical
+            identity are deeply rooted in Crimea.
+          </p>
+        </div>
+      </Section>
+
+      <Section tone="ivory" aria-labelledby="khanate-title">
+        <div className="mx-auto max-w-prose">
+          <Eyebrow>Statehood</Eyebrow>
+          <AnimatedHeading id="khanate-title" className="mt-3 text-3xl md:text-4xl">The Crimean Khanate</AnimatedHeading>
+          <p className="mt-5 text-lg leading-relaxed text-ink/85">
+            The formation and consolidation of the Crimean Tatar people continued through the
+            medieval period and the era of the Golden Horde. In the 15th century, the Crimean
+            Khanate emerged as a Crimean Tatar state and remained the political and cultural
+            centre of Crimean Tatar life for more than three centuries, until the Russian Empire
+            annexed Crimea in 1783.
           </p>
         </div>
       </Section>
@@ -89,17 +105,34 @@ export default function AboutCrimeanTatarsPage() {
             <Eyebrow className="text-gold-soft">History &amp; Memory</Eyebrow>
           <AnimatedHeading id="memory-title" className="mt-3 text-3xl text-ivory md:text-4xl">The Sürgünlik of 1944</AnimatedHeading>
             <p className="mt-4 max-w-prose text-ivory/85">
-              In 1944 the entire Crimean Tatar population was deported from Crimea by the Soviet
-              authorities — an event Crimean Tatars call the Sürgünlik. Many died; survivors
-              endured decades of exile before beginning to return. It remains a central part of
-              Crimean Tatar historical memory, remembered here with dignity as educational
-              context — not as advocacy.
+              In May 1944, the Soviet regime forcibly deported virtually the entire Crimean Tatar
+              population from Crimea, primarily to Central Asia. Families were removed from their
+              homes and transported thousands of kilometres into exile, where many thousands died
+              during the deportation and its aftermath. For decades, Crimean Tatars were denied
+              the right to return to their homeland.
             </p>
-            <p className="mt-3 max-w-prose text-sm text-ivory/70">
-              Historical detail and citations are being prepared and reviewed. No individuals
-              are named without verified identification.
+            <p className="mt-4 max-w-prose text-ivory/85">
+              After nearly half a century of exile, the mass return of Crimean Tatars to Crimea
+              began in the late 1980s and accelerated following the collapse of the Soviet Union.
+              Families returned to rebuild their homes, communities, cultural institutions and
+              national life in their ancestral homeland.
             </p>
           </Reveal>
+        </div>
+      </Section>
+
+      <Section tone="sand" aria-labelledby="occupation-title">
+        <div className="mx-auto max-w-prose">
+          <Eyebrow>Since 2014</Eyebrow>
+          <AnimatedHeading id="occupation-title" className="mt-3 text-3xl md:text-4xl">Occupation and renewed pressure</AnimatedHeading>
+          <p className="mt-5 text-lg leading-relaxed text-ink/85">
+            In 2014, the Russian Federation occupied and illegally annexed Crimea, once again
+            profoundly affecting the Crimean Tatar people and their homeland. Since the occupation
+            began, international human rights organizations and the United Nations have documented
+            serious human rights violations in Crimea, including restrictions on freedom of
+            expression, religion and cultural identity, with Crimean Tatar leaders, activists,
+            media and institutions particularly affected.
+          </p>
         </div>
       </Section>
 
@@ -107,15 +140,11 @@ export default function AboutCrimeanTatarsPage() {
       <Section tone="ivory" aria-labelledby="why-title">
         <div className="mx-auto max-w-prose">
           <Eyebrow>Why preservation matters</Eyebrow>
-          <AnimatedHeading id="why-title" className="mt-3 text-3xl md:text-4xl">Carrying heritage forward</AnimatedHeading>
-          <p className="mt-5 text-ink/85">
-            For a people whose language and homeland have been under pressure, preserving
-            heritage is an act of continuity and dignity. In Canada, sharing this culture
-            enriches the wider community and ensures that Crimean Tatar identity, memory, and
-            traditions endure for future generations.
-          </p>
-          <p className="mt-4 text-sm italic text-navy-600">
-            Sources and citations for this page are in preparation.
+          <AnimatedHeading id="why-title" className="mt-3 text-3xl md:text-4xl">Crimea remains their ancestral homeland</AnimatedHeading>
+          <p className="mt-5 text-lg leading-relaxed text-ink/85">
+            Despite centuries of upheaval, deportation, exile and renewed occupation, the Crimean
+            Tatars have preserved their language, culture, traditions and enduring connection to
+            Crimea. Crimea remains their ancestral homeland and the heart of Crimean Tatar identity.
           </p>
         </div>
       </Section>
