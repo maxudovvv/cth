@@ -78,7 +78,7 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
           </>
         ) : (
           <span className="heritage-book-mobile-cue" aria-hidden="true">
-            <span>Нажмите, чтобы открыть книгу</span>
+            <span>Tap to open the book</span>
             <span className="heritage-book-mobile-arrow">↙</span>
           </span>
         )}
