@@ -76,7 +76,15 @@ export function HeritageBook({ variant = "book" }: HeritageBookProps) {
             <span className="heritage-book-scene-aura" aria-hidden="true" />
             <span className="heritage-book-scene-label">Open the heritage book</span>
           </>
-        ) : null}
+        ) : (
+          <>
+            <span className="heritage-book-mobile-glow" aria-hidden="true" />
+            <span className="heritage-book-mobile-cue" aria-hidden="true">
+              <span>Tap to open</span>
+              <span className="heritage-book-mobile-arrow">↙</span>
+            </span>
+          </>
+        )}
       </button>
 
       {isOpen && createPortal(
