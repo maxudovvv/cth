@@ -27,7 +27,7 @@ export default function AboutPage() {
         title="A cultural and educational organization"
         intro={organization.positioning}
         bgVideo="/media/video/final-cta-loop-pingpong.mp4"
-        bgImage="/media/video/final-cta-poster.png"
+        bgImage="/media/video/about-hero-first-frame.jpg"
         bgAlt="A cinematic blue landscape representing Crimea."
         objectPosition="center 58%"
       />
