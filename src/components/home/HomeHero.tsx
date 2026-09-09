@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   motion,
   useReducedMotion,
@@ -20,6 +20,7 @@ import { HeritageBook } from "@/components/home/HeritageBook";
 
 export function HomeHero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = Boolean(useReducedMotion());
   const ready = useAnimationReady();
   const entranceState = ready || reduceMotion ? "visible" : "hidden";
@@ -37,6 +38,37 @@ export function HomeHero() {
     [0, 1],
     [0, reduceMotion ? 0 : 10],
   );
+
+  useEffect(() => {
+    const video = mobileVideoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+
+    const playMobileVideo = () => {
+      if (window.matchMedia("(max-width: 767px)").matches) {
+        void video.play().catch(() => undefined);
+      }
+    };
+    const playWhenVisible = () => {
+      if (!document.hidden) playMobileVideo();
+    };
+
+    playMobileVideo();
+    window.addEventListener("pageshow", playMobileVideo);
+    document.addEventListener("visibilitychange", playWhenVisible);
+    document.addEventListener("touchstart", playMobileVideo, {
+      once: true,
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("pageshow", playMobileVideo);
+      document.removeEventListener("visibilitychange", playWhenVisible);
+      document.removeEventListener("touchstart", playMobileVideo);
+    };
+  }, []);
 
   return (
     <section
@@ -74,23 +106,23 @@ export function HomeHero() {
             style={{ objectPosition: "center center" }}
           />
           <video
+            ref={mobileVideoRef}
             className="absolute inset-0 h-full w-full object-cover md:hidden"
             style={{ objectPosition: "center center" }}
+            src="/media/video/coffee-mobile-smooth-loop.mp4"
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             poster="/media/generated/home-hero-mobile-v2.jpg"
             aria-label={heroSlot.alt}
             disablePictureInPicture
-          >
-            <source
-              src="/media/video/coffee-mobile-smooth-loop.mp4"
-              type="video/mp4"
-              media="(max-width: 767px)"
-            />
-          </video>
+            onCanPlay={(event) => {
+              event.currentTarget.muted = true;
+              void event.currentTarget.play().catch(() => undefined);
+            }}
+          />
           </>
         ) : (
           <Image
