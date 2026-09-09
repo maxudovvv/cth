@@ -3,12 +3,12 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Section, Eyebrow } from "@/components/ui/Primitives";
 import { StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { AnimatedHeading } from "@/components/motion/AnimatedHeading";
-import { DonationForm } from "@/components/donate/DonationForm";
+import { InteracContribution } from "@/components/donate/InteracContribution";
 
 export const metadata: Metadata = {
   title: "Support Crimean Tatar Heritage Canada",
   description:
-    "Make a one-time or monthly contribution to support Crimean Tatar heritage in Canada.",
+    "Support Crimean Tatar heritage in Canada with a one-time Interac e-Transfer contribution.",
 };
 
 const uses = [
@@ -49,7 +49,7 @@ export default function DonatePage() {
           </StaggerGroup>
 
           <div className="mt-10">
-            <DonationForm />
+            <InteracContribution />
           </div>
         </div>
       </Section>

@@ -23,6 +23,12 @@ function siteUrl(request: Request) {
 }
 
 export async function POST(request: Request) {
+  if (process.env.STRIPE_CHECKOUT_ENABLED !== "true") {
+    return NextResponse.json(
+      { error: "Card payments are coming soon. Please use Interac e-Transfer on our contribution page." },
+      { status: 503 },
+    );
+  }
   try {
     const secretKey = process.env.STRIPE_SECRET_KEY;
     if (!secretKey) {
