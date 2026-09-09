@@ -3,7 +3,6 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Section, Eyebrow, ButtonLink } from "@/components/ui/Primitives";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 import { AnimatedHeading } from "@/components/motion/AnimatedHeading";
-import { HeritageArchive } from "@/components/about/HeritageArchive";
 import { organization } from "@/content/data/site";
 
 export const metadata: Metadata = {
@@ -44,9 +43,26 @@ export default function AboutPage() {
             </p>
           </Reveal>
 
-          {/* Interactive cultural archive — same footprint as the former static card. */}
           <Reveal delay={0.1}>
-            <HeritageArchive />
+            <div className="overflow-hidden rounded-2xl bg-navy shadow-soft ring-1 ring-gold/25">
+              <div className="aspect-video w-full">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/XX3z1WLvpNY?start=158&playsinline=1&rel=0"
+                  title="Featured video — Crimean Tatar Heritage Canada"
+                  className="h-full w-full border-0"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+              <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm text-ivory">
+                <span>Watch the video</span>
+                <a href="https://www.youtube.com/watch?v=XX3z1WLvpNY&t=158s" target="_blank" rel="noopener noreferrer" className="text-gold-soft underline underline-offset-4 hover:text-ivory">
+                  Open on YouTube ↗
+                </a>
+              </div>
+            </div>
           </Reveal>
         </div>
       </Section>
