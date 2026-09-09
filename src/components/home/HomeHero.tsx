@@ -73,6 +73,24 @@ export function HomeHero() {
             className="object-cover md:hidden"
             style={{ objectPosition: "center center" }}
           />
+          <video
+            className="absolute inset-0 h-full w-full object-cover md:hidden"
+            style={{ objectPosition: "center center" }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/media/generated/home-hero-mobile-v2.jpg"
+            aria-label={heroSlot.alt}
+            disablePictureInPicture
+          >
+            <source
+              src="/media/video/coffee-mobile-smooth-loop.mp4"
+              type="video/mp4"
+              media="(max-width: 767px)"
+            />
+          </video>
           </>
         ) : (
           <Image
