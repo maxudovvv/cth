@@ -47,7 +47,7 @@ export default function AboutPage() {
             <div className="overflow-hidden rounded-2xl bg-navy shadow-soft ring-1 ring-gold/25">
               <div className="aspect-video w-full">
                 <iframe
-                  src="https://www.youtube-nocookie.com/embed/XX3z1WLvpNY?start=158&playsinline=1&rel=0"
+                  src="https://www.youtube-nocookie.com/embed/0BFf9oCOVQQ?playsinline=1&rel=0"
                   title="Featured video — Crimean Tatar Heritage Canada"
                   className="h-full w-full border-0"
                   loading="lazy"
@@ -58,7 +58,7 @@ export default function AboutPage() {
               </div>
               <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm text-ivory">
                 <span>Watch the video</span>
-                <a href="https://www.youtube.com/watch?v=XX3z1WLvpNY&t=158s" target="_blank" rel="noopener noreferrer" className="text-gold-soft underline underline-offset-4 hover:text-ivory">
+                <a href="https://www.youtube.com/watch?v=0BFf9oCOVQQ" target="_blank" rel="noopener noreferrer" className="text-gold-soft underline underline-offset-4 hover:text-ivory">
                   Open on YouTube ↗
                 </a>
               </div>
