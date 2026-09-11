@@ -49,8 +49,8 @@ export async function POST(request: Request) {
     if (!Number.isFinite(amount) || amount < 5 || amount > 100000) {
       return NextResponse.json({ error: "Please enter an amount between $5 and $100,000 CAD." }, { status: 400 });
     }
-    if (frequency !== "one_time") {
-      return NextResponse.json({ error: "Only one-time contributions are available at this time." }, { status: 400 });
+    if (frequency !== "one_time" && frequency !== "monthly") {
+      return NextResponse.json({ error: "Please select one-time or monthly." }, { status: 400 });
     }
     if (!donorName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: "Please enter your name and a valid email address." }, { status: 400 });
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     };
 
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
+      mode: frequency === "monthly" ? "subscription" : "payment",
       customer_email: email,
       billing_address_collection: "auto",
       allow_promotion_codes: false,
@@ -76,15 +76,17 @@ export async function POST(request: Request) {
             currency: "cad",
             unit_amount: Math.round(amount * 100),
             product_data: {
-              name: "Contribution to Crimean Tatar Heritage Canada",
+              name: frequency === "monthly" ? "Monthly contribution to Crimean Tatar Heritage Canada" : "Contribution to Crimean Tatar Heritage Canada",
               description: designation,
               metadata,
             },
+            ...(frequency === "monthly" ? { recurring: { interval: "month" as const } } : {}),
           },
         },
       ],
       metadata,
-      payment_intent_data: { metadata, receipt_email: email },
+      payment_intent_data: frequency === "one_time" ? { metadata, receipt_email: email } : undefined,
+      subscription_data: frequency === "monthly" ? { metadata } : undefined,
       success_url: `${siteUrl(request)}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl(request)}/donate`,
       custom_text: {

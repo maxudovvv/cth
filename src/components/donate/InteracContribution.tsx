@@ -12,6 +12,7 @@ export function InteracContribution() {
   const [status, setStatus] = useState("");
   const [method, setMethod] = useState<"interac" | "card">("interac");
   const [loading, setLoading] = useState(false);
+  const [frequency, setFrequency] = useState<"one_time" | "monthly">("one_time");
   const heading = useRef<HTMLHeadingElement>(null);
   const valid = Number.isFinite(Number(amount)) && Number(amount) >= (method === "card" ? 5 : 0.01) && Number(amount) <= 100000;
   const formatted = valid ? Number(amount).toFixed(2) : "";
@@ -36,7 +37,7 @@ export function InteracContribution() {
         const response = await fetch("/api/donations/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: Number(amount), frequency: "one_time", donorName: form.get("donorName"), email: form.get("email") }),
+          body: JSON.stringify({ amount: Number(amount), frequency, donorName: form.get("donorName"), email: form.get("email"), designation: form.get("designation"), dedication: form.get("dedication") }),
         });
         const data = await response.json();
         if (!response.ok || !data.url) throw new Error(data.error || "Unable to open checkout. Please try again.");
@@ -62,9 +63,15 @@ export function InteracContribution() {
         <button type="button" disabled={loading} aria-pressed={method === "card"} onClick={() => { setMethod("card"); setStatus(""); }} className={`rounded-xl border p-5 text-left ${method === "card" ? "border-gold bg-ivory" : "border-line bg-white"}`}>
           <p className="text-xs font-semibold uppercase tracking-widest text-navy-600">Cards &amp; international</p>
           <h3 className="mt-2 font-display text-2xl text-navy">Pay by card</h3>
-          <p className="mt-2 text-sm text-navy-600">Make a one-time contribution securely through Stripe.</p>
+          <p className="mt-2 text-sm text-navy-600">Make a one-time or monthly contribution securely through Stripe.</p>
         </button>
       </div>
+      {method === "card" && <fieldset disabled={loading}>
+        <legend className="text-sm font-semibold uppercase tracking-[0.16em] text-navy">Contribution frequency</legend>
+        <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl bg-sand/50 p-1.5">
+          {(["one_time", "monthly"] as const).map(value => <button key={value} type="button" aria-pressed={frequency === value} onClick={() => setFrequency(value)} className={`min-h-[46px] rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${frequency === value ? "bg-navy text-white shadow-sm" : "text-navy hover:bg-white/70"}`}>{value === "monthly" ? "Monthly" : "One-time"}</button>)}
+        </div>
+      </fieldset>}
       <fieldset>
         <legend className="text-sm font-semibold uppercase tracking-widest text-navy">Choose an amount (CAD)</legend>
         <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-5">
@@ -88,10 +95,19 @@ export function InteracContribution() {
           <label className="text-sm font-semibold text-navy">Name<input required name="donorName" autoComplete="name" maxLength={120} className="mt-2 min-h-[48px] w-full rounded-xl border border-line px-4 py-3" /></label>
           <label className="text-sm font-semibold text-navy">Email<input required name="email" type="email" autoComplete="email" className="mt-2 min-h-[48px] w-full rounded-xl border border-line px-4 py-3" /></label>
         </div>
+        <label className="block text-sm font-semibold text-navy">Direct my contribution to
+          <select name="designation" className="mt-2 min-h-[48px] w-full rounded-xl border border-line bg-white px-4 py-3">
+            {["Where it is needed most", "Cultural programs", "Children and youth", "Heritage preservation", "Community events"].map(value => <option key={value}>{value}</option>)}
+          </select>
+        </label>
+        <label className="block text-sm font-semibold text-navy">Dedication (optional)
+          <input name="dedication" maxLength={200} placeholder="In honour of… or In memory of…" className="mt-2 min-h-[48px] w-full rounded-xl border border-line px-4 py-3" />
+        </label>
         <p className="text-sm text-navy-600">International cards are welcome. Contributions are charged in CAD. Minimum card contribution: $5 CAD.</p>
+        {frequency === "monthly" && <p className="text-sm text-navy-600">Your card will be charged {valid ? `$${formatted} CAD` : "your chosen amount"} every month until cancelled. To cancel future payments, contact <a href="mailto:canadacrimea@gmail.com" className="underline">canadacrimea@gmail.com</a>.</p>}
       </div>}
       <button type="submit" disabled={!valid || loading} className="min-h-[52px] w-full rounded-xl bg-gold px-5 py-3 font-semibold text-navy transition-colors hover:bg-gold-soft disabled:opacity-50">
-        {loading ? "Opening secure checkout…" : `${method === "card" ? "Continue to Stripe" : "Continue with Interac"}${valid ? ` · $${formatted} CAD` : ""}`}
+        {loading ? "Opening secure checkout…" : `${method === "card" ? "Continue to Stripe" : "Continue with Interac"}${valid ? ` · $${formatted} CAD` : ""}${method === "card" && frequency === "monthly" ? " / month" : ""}`}
       </button>
       {details && method === "interac" && (
         <section className="space-y-5 rounded-xl border border-line bg-ivory p-5" aria-labelledby="transfer-details-title">
