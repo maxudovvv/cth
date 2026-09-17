@@ -12,10 +12,10 @@ export default function UpcomingEventsPage() {
     <>
       <header className="relative isolate overflow-hidden bg-navy text-ivory">
         <Image src="/media/hero/upcoming-events.jpg" alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[65%_center] md:object-center" />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-navy/90 via-navy/55 to-navy/10" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-navy/95 via-navy/70 to-navy/20" />
         <div className="container-wide py-24 pt-36 md:py-32 md:pt-44">
           <p className="text-sm font-semibold uppercase tracking-widest text-gold-soft">Gather · Connect · Celebrate</p>
-          <h1 className="mt-5 max-w-2xl font-display text-5xl leading-tight md:text-6xl">Upcoming Events</h1>
+          <h1 className="mt-5 max-w-2xl font-display text-5xl font-semibold leading-tight text-ivory [text-shadow:0_2px_12px_rgba(0,0,0,0.65)] md:text-6xl">Upcoming Events</h1>
           <p className="mt-5 max-w-lg text-lg leading-relaxed text-ivory/90">Meet, share stories, and celebrate Crimean Tatar heritage with our community.</p>
         </div>
       </header>
