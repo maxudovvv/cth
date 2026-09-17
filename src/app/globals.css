@@ -671,6 +671,18 @@ p {
 }
 
 /* Restrained gold text gradient for select display accents. */
+@media (max-width: 767px) {
+  #home .home-hero-title {
+    font-size: clamp(2rem, 9.3vw, 3.6rem);
+  }
+  #home .home-hero-gold {
+    background: none;
+    color: #e6c778;
+    -webkit-text-fill-color: #e6c778;
+    text-shadow: 0 2px 4px rgba(7,17,31,.95), 0 0 16px rgba(7,17,31,.8);
+  }
+}
+
 .text-gradient-gold {
   background: linear-gradient(120deg, #e6cf97 0%, #c39a3f 55%, #a9812f 100%);
   -webkit-background-clip: text;

@@ -14,6 +14,7 @@ export const primaryNav: NavItem[] = [
   { label: "Home", href: "/", primary: true },
   { label: "About", href: "/about", primary: true },
   { label: "Our Activities", href: "/our-activities", primary: true },
+  { label: "Upcoming Events", href: "/upcoming-events", primary: true },
   { label: "About Crimean Tatars", href: "/about-crimean-tatars", primary: true },
   { label: "Gallery", href: "/gallery", primary: true },
   { label: "Contact", href: "/contact", primary: true },

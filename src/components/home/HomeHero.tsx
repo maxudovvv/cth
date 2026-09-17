@@ -189,14 +189,14 @@ export function HomeHero() {
             trigger="load"
             lines={[
               "Crimean Tatar",
-              <span className="text-gradient-gold" key="heritage-canada">
+              <span className="text-gradient-gold home-hero-gold" key="heritage-canada">
                 Heritage Canada
               </span>,
             ]}
             delay={reduceMotion ? 0 : 0.3}
             stagger={reduceMotion ? 0 : 0.18}
             duration={0.92}
-            className="mt-5 font-display text-[2.6rem] font-semibold leading-[1.03] text-ivory drop-shadow-[0_2px_18px_rgba(7,17,31,0.6)] sm:text-6xl lg:text-[4.7rem]"
+            className="home-hero-title mt-5 font-display text-[2.6rem] font-semibold leading-[1.03] text-ivory drop-shadow-[0_2px_18px_rgba(7,17,31,0.6)] sm:text-6xl lg:text-[4.7rem]"
           />
 
           <motion.p
