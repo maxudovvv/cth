@@ -80,7 +80,7 @@ export default function UpcomingEventsPage() {
               </div>
               <div className="min-h-[190px] border-b border-ivory/15 px-6 py-5 md:px-8 lg:min-h-[220px]">
                 <p className="text-sm font-semibold uppercase tracking-widest text-gold-soft">September 18–20 · Toronto</p>
-                <h3 className="mt-3 font-display text-2xl leading-snug md:text-3xl">Bloor West Village Toronto Ukrainian Festival</h3>
+                <h3 className="mt-3 font-display text-2xl leading-snug text-ivory md:text-3xl">Bloor West Village Toronto Ukrainian Festival</h3>
                 <p className="mt-2 text-sm text-ivory/75">Crimean Tatar Heritage Canada × Canadian Association of Crimean Tatars</p>
               </div>
               <div className="flex flex-1 flex-col px-6 py-6 md:px-8 md:py-8">
