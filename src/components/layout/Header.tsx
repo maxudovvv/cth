@@ -52,7 +52,7 @@ export function Header() {
   }, [open]);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
