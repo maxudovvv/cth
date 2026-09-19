@@ -33,16 +33,26 @@ export default function UpcomingEventsPage() {
             at the Bloor West Village Toronto Ukrainian Festival.
           </p>
 
-          <div className="mt-10 grid items-start gap-6 lg:grid-cols-2">
-            <article className="overflow-hidden rounded-2xl border border-line bg-white shadow-soft">
-              <div className="border-b border-line bg-sand/55 px-6 py-5 md:px-8">
+          <div className="mt-10 grid auto-rows-fr items-stretch gap-6 lg:grid-cols-2">
+            <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-soft">
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <Image
+                  src="/media/events/costume-lecture-illustration.webp"
+                  alt="Illustrative display of women's and men's traditional Crimean Tatar attire."
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover object-[center_38%]"
+                />
+                <span className="absolute bottom-3 right-3 rounded-full bg-navy/75 px-3 py-1 text-xs font-medium text-ivory">Illustrative image</span>
+              </div>
+              <div className="min-h-[190px] border-b border-line bg-sand/55 px-6 py-5 md:px-8 lg:min-h-[220px]">
                 <p className="text-sm font-semibold uppercase tracking-widest text-navy-600">Sunday · September 20</p>
                 <h3 className="mt-3 font-display text-2xl leading-snug text-navy md:text-3xl">
                   Crimean Tatar Women’s and Men’s Traditional Costumes of the Late 19th and Early 20th Centuries
                 </h3>
                 <p className="mt-2 text-sm font-semibold text-navy-600">Lecture by Elmira Kataki</p>
               </div>
-              <div className="px-6 py-6 md:px-8 md:py-8">
+              <div className="flex flex-1 flex-col px-6 py-6 md:px-8 md:py-8">
                 <p className="leading-relaxed text-navy-600">
                   Explore authentic examples of Crimean Tatar traditional costumes and learn about
                   the distinctive details and cultural significance of each element.
@@ -51,19 +61,29 @@ export default function UpcomingEventsPage() {
                   <div className="flex gap-4"><dt className="w-16 shrink-0 font-semibold">When</dt><dd><time dateTime="2026-09-20T15:30:00-04:00">September 20, 2026 · 3:30 PM</time></dd></div>
                   <div className="flex gap-4"><dt className="w-16 shrink-0 font-semibold">Where</dt><dd>Speaker Corner Stage Program · Bloor St W &amp; Beresford Ave, Toronto</dd></div>
                 </dl>
-                <a href={lectureInstagram} target="_blank" rel="noopener noreferrer" className={`${instagramLinkClass} mt-7 text-navy hover:bg-gold/15`}>
+                <a href={lectureInstagram} target="_blank" rel="noopener noreferrer" className={`${instagramLinkClass} mt-auto self-start pt-3 text-navy hover:bg-gold/15`}>
                   View lecture on Instagram <span aria-hidden="true" className="ml-2">↗</span>
                 </a>
               </div>
             </article>
 
-            <article className="overflow-hidden rounded-2xl bg-navy text-ivory shadow-soft">
-              <div className="border-b border-ivory/15 px-6 py-5 md:px-8">
+            <article className="flex h-full flex-col overflow-hidden rounded-2xl bg-navy text-ivory shadow-soft">
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <Image
+                  src="/media/events/festival-table-illustration.webp"
+                  alt="Illustrative festival table with coffee, sweets, printed textiles and books."
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+                <span className="absolute bottom-3 right-3 rounded-full bg-navy/75 px-3 py-1 text-xs font-medium text-ivory">Illustrative image</span>
+              </div>
+              <div className="min-h-[190px] border-b border-ivory/15 px-6 py-5 md:px-8 lg:min-h-[220px]">
                 <p className="text-sm font-semibold uppercase tracking-widest text-gold-soft">September 18–20 · Toronto</p>
                 <h3 className="mt-3 font-display text-2xl leading-snug md:text-3xl">Bloor West Village Toronto Ukrainian Festival</h3>
                 <p className="mt-2 text-sm text-ivory/75">Crimean Tatar Heritage Canada × Canadian Association of Crimean Tatars</p>
               </div>
-              <div className="px-6 py-6 md:px-8 md:py-8">
+              <div className="flex flex-1 flex-col px-6 py-6 md:px-8 md:py-8">
                 <p className="leading-relaxed text-ivory/85">
                   Visit us for Crimean Tatar culture, traditions, food and hands-on experiences
                   during the festival.
@@ -78,7 +98,7 @@ export default function UpcomingEventsPage() {
                 <p className="mt-6 border-t border-ivory/15 pt-5 text-sm text-ivory/80">
                   <time dateTime="2026-09-18">September 18</time>–<time dateTime="2026-09-20">20, 2026</time> · Bloor West Village, Toronto
                 </p>
-                <a href={festivalInstagram} target="_blank" rel="noopener noreferrer" className={`${instagramLinkClass} mt-7 text-gold-soft hover:bg-gold/10`}>
+                <a href={festivalInstagram} target="_blank" rel="noopener noreferrer" className={`${instagramLinkClass} mt-auto self-start pt-3 text-gold-soft hover:bg-gold/10`}>
                   View festival on Instagram <span aria-hidden="true" className="ml-2">↗</span>
                 </a>
               </div>
