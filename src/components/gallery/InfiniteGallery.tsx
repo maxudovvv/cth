@@ -55,7 +55,7 @@ export function InfiniteGallery() {
   if (!mounted) return null;
   return createPortal(
     <div className="codrops-gallery" ref={root}>
-      <div className="codrops-gallery__frame"><div><Link href="/gallery">← Original gallery</Link><span> / Experimental gallery</span></div><span>Crimean Tatar Heritage Canada</span></div>
+      <div className="codrops-gallery__frame"><div><Link href="/gallery-classic">← Classic gallery</Link><span> / Community archive</span></div><span>Crimean Tatar Heritage Canada</span></div>
       <div className="codrops-gallery__instruction">Scroll or swipe to explore · Select an image</div>
       <div className="gallery" aria-label="Community photo gallery">
         {galleryStills.map((item, index) => (
