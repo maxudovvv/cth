@@ -7,6 +7,7 @@ import { contact, organization } from "@/content/data/site";
 
 export const metadata: Metadata = {
   title: "Contact",
+  alternates: { canonical: "/contact" },
   description: "Get in touch with Crimean Tatar Heritage Canada.",
 };
 

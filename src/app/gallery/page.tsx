@@ -8,6 +8,7 @@ import { culturalMedia } from "@/content/data/media";
 
 export const metadata: Metadata = {
   title: "Gallery",
+  alternates: { canonical: "/gallery" },
   description:
     "A gallery of Crimean Tatar community life and cultural events across Canada.",
 };

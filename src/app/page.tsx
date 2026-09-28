@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { HomeHero } from "@/components/home/HomeHero";
@@ -14,6 +15,10 @@ import {
   galleryStills,
   community,
 } from "@/content/data/media";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const activities = [
   { title: "Cultural events", text: "Gatherings and celebrations that bring the community together across Canada." },

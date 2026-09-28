@@ -7,6 +7,7 @@ import { organization } from "@/content/data/site";
 
 export const metadata: Metadata = {
   title: "About",
+  alternates: { canonical: "/about" },
   description:
     "About Crimean Tatar Heritage Canada — a cultural and educational organization preserving and sharing Crimean Tatar heritage across Canada.",
 };

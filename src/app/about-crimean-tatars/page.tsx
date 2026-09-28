@@ -9,6 +9,7 @@ import { surgunlikSlot } from "@/content/data/media";
 
 export const metadata: Metadata = {
   title: "About Crimean Tatars",
+  alternates: { canonical: "/about-crimean-tatars" },
   description:
     "Who the Crimean Tatars are — an Indigenous people of Crimea whose identity, language, culture, and history are deeply rooted in the Crimean Peninsula.",
 };

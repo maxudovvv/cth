@@ -5,6 +5,7 @@ import { Section } from "@/components/ui/Primitives";
 
 export const metadata: Metadata = {
   title: "Thank You | Crimean Tatar Heritage Canada",
+  robots: { index: false, follow: false },
   description: "Thank you for supporting Crimean Tatar heritage in Canada.",
 };
 

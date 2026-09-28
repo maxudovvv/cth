@@ -9,6 +9,7 @@ import { community, culturalMedia, workshopMedia } from "@/content/data/media";
 
 export const metadata: Metadata = {
   title: "Our Activities",
+  alternates: { canonical: "/our-activities" },
   description:
     "Workshops, festivals, cultural events, film screenings, exhibitions, and educational programs by Crimean Tatar Heritage Canada.",
 };

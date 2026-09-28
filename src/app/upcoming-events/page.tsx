@@ -4,6 +4,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Upcoming Events",
+  alternates: { canonical: "/upcoming-events" },
   description: "Upcoming community gatherings and cultural events from Crimean Tatar Heritage Canada.",
 };
 

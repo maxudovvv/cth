@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { RouteTransitionFX } from "@/components/motion/RouteTransitionFX";
+import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";
 
 const SITE_TITLE = "Crimean Tatar Heritage Canada";
@@ -10,19 +11,20 @@ const SITE_DESCRIPTION =
   "Crimean Tatar Heritage Canada — a cultural and educational home preserving Crimean Tatar history, culture, language, and heritage across Canada.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("http://localhost:3000"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_TITLE,
     template: "%s · Crimean Tatar Heritage Canada",
   },
   description: SITE_DESCRIPTION,
-  robots: { index: false, follow: false }, // prototype: do not index
+  robots: { index: true, follow: true },
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     type: "website",
     locale: "en_CA",
     siteName: SITE_TITLE,
+    url: SITE_URL,
   },
   icons: {
     icon: [{ url: "/media/brand/crimean-tatar-heritage-canada-logo-dark.png", type: "image/png" }],

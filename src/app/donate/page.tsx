@@ -7,8 +7,9 @@ import { InteracContribution } from "@/components/donate/InteracContribution";
 
 export const metadata: Metadata = {
   title: "Support Crimean Tatar Heritage Canada",
+  alternates: { canonical: "/donate" },
   description:
-    "Support Crimean Tatar heritage in Canada with a one-time Interac e-Transfer contribution.",
+    "Support Crimean Tatar heritage in Canada with a one-time or monthly contribution by card or Interac e-Transfer.",
 };
 
 const uses = [
