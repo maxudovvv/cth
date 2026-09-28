@@ -1142,3 +1142,38 @@ p {
     stroke-dashoffset: 0 !important;
   }
 }
+/* Isolated gallery experiment inspired by the Codrops infinite scroll study. */
+.infinite-gallery { min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); background: #081a2a; color: #f8f1e7; }
+.infinite-gallery__intro { align-self: center; padding: clamp(2rem, 6vw, 7rem); }
+.infinite-gallery__back { display: inline-block; margin-bottom: clamp(3rem, 12vh, 9rem); color: #dcbf83; font-size: .85rem; }
+.infinite-gallery__eyebrow { color: #dcbf83; text-transform: uppercase; letter-spacing: .24em; font-size: .7rem; }
+.infinite-gallery h1 { color: #f8f1e7; font-family: Georgia, serif; font-weight: 400; font-size: clamp(2.8rem, 5.2vw, 6rem); line-height: 1.05; max-width: 12ch; margin: 1.4rem 0; }
+.infinite-gallery__intro > p:not(.infinite-gallery__eyebrow) { color: #d6d6cf; max-width: 25rem; }
+.infinite-gallery__hint { display: block; margin-top: 3rem; color: #dcbf83; font-size: .8rem; letter-spacing: .15em; text-transform: uppercase; }
+.infinite-gallery__viewport { height: 100svh; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; padding: 20vh 9vw 20vh 2vw; }
+.infinite-gallery__viewport::-webkit-scrollbar { display: none; }
+.infinite-gallery__card { display: block; width: min(100%, 570px); margin: 0 auto 11vh; color: #f8f1e7; text-align: left; }
+.infinite-gallery__photo { position: relative; display: block; width: 100%; aspect-ratio: 1.17; overflow: hidden; background: #213745; box-shadow: 0 22px 60px #0005; }
+.infinite-gallery__photo img { transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+.infinite-gallery__card:hover img, .infinite-gallery__card:focus-visible img { transform: scale(1.06); }
+.infinite-gallery__card:focus-visible { outline: 2px solid #dcbf83; outline-offset: 6px; }
+.infinite-gallery__index { display: block; color: #dcbf83; font-size: .7rem; letter-spacing: .2em; margin: 1rem 0 .35rem; }
+.infinite-gallery__label { display: block; max-width: 35rem; font-family: Georgia, serif; font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.35; }
+.infinite-gallery__overlay { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; gap: clamp(.2rem, 2vw, 2rem); padding: 4rem 1rem 2rem; background: #05121af2; color: white; }
+.infinite-gallery__dismiss { position: absolute; top: 1rem; right: 1.5rem; font-size: 2.4rem; line-height: 1; }
+.infinite-gallery__arrow { flex: 0 0 2.5rem; height: 3rem; font-size: 1.6rem; color: #e4c48b; }
+.infinite-gallery__detail { width: min(100%, 1100px); min-width: 0; }
+.infinite-gallery__detail-photo { position: relative; height: min(72svh, 780px); }
+.infinite-gallery__detail figcaption { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; color: #eee5d9; font-size: .85rem; }
+@media (max-width: 700px) {
+  .infinite-gallery { display: block; }
+  .infinite-gallery__intro { padding: 5rem 8vw 1rem; }
+  .infinite-gallery__back { margin-bottom: 2rem; }
+  .infinite-gallery h1 { font-size: clamp(2.5rem, 10vw, 4rem); }
+  .infinite-gallery__hint { margin-top: 1rem; }
+  .infinite-gallery__viewport { height: 65svh; padding: 8vh 8vw; }
+  .infinite-gallery__card { margin-bottom: 6vh; }
+  .infinite-gallery__detail-photo { height: 60svh; }
+  .infinite-gallery__arrow { flex-basis: 1.8rem; }
+}
+@media (prefers-reduced-motion: reduce) { .infinite-gallery__photo img { transition: none; } }
