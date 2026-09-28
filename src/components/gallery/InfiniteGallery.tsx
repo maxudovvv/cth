@@ -1,98 +1,92 @@
+// @ts-nocheck — Codrops' imperative GSAP classes manage runtime DOM state.
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { galleryStills } from "@/content/data/media";
 
-const count = galleryStills.length;
+const titles = ["Community parade", "Dance and tradition", "Heritage on display", "Her Heart screening", "Portrait exhibition", "Gathering together", "Stories in print", "Art and memory", "A conversation", "Cooking together", "Hands on heritage", "A taste of Crimea"];
+const positions = [[-24, 20], [14, 10], [-18, 23], [22, 18], [-26, 25], [28, 28], [-20, 16], [8, 30], [-12, 15], [15, 23], [-24, 24], [26, 16]];
 
 export function InfiniteGallery() {
-  const scroller = useRef<HTMLDivElement>(null);
-  const lastTrigger = useRef<HTMLButtonElement | null>(null);
-  const closeButton = useRef<HTMLButtonElement>(null);
-  const [open, setOpen] = useState<number | null>(null);
+  const root = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const reduced = useReducedMotion();
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    setMounted(true);
-    const node = scroller.current;
-    if (node) node.scrollTop = node.scrollHeight / 3;
-  }, []);
+    if (!mounted) return;
+    let disposed = false;
+    let cleanup = () => {};
+    async function init() {
+      const [{ default: Reveal }, { default: Slider }, { default: Transition }] = await Promise.all([
+        import("./codrops/Reveal"), import("./codrops/Slider"), import("./codrops/Transition"),
+      ]);
+      if (disposed || !root.current) return;
+      const element = root.current;
+      const images = [...element.querySelectorAll<HTMLImageElement>(".gallery__img")];
+      await Promise.all(images.map((img) => img.decode().catch(() => {})));
+      if (disposed || !root.current) return;
+      let slider: InstanceType<typeof Slider>;
+      const transition = new Transition({ onClose: () => slider?.start() });
+      const reveal = new Reveal();
+      const SliderCtor = Slider as unknown as new (options: { enabled: () => boolean; onToggle: (changes: unknown, immediate: boolean) => void }) => InstanceType<typeof Slider>;
+      slider = new SliderCtor({ enabled: () => transition.state === "closed", onToggle: (changes, immediate) => reveal.toggle(changes, immediate) });
+      const listeners: Array<() => void> = [];
+      element.querySelectorAll<HTMLElement>(".gallery__slide").forEach((slide, index) => {
+        const open = () => { if (transition.state !== "closed") return; slider.stop(); transition.open(slide, index); };
+        const key = (event: KeyboardEvent) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); } };
+        slide.addEventListener("click", open);
+        slide.addEventListener("keydown", key);
+        listeners.push(() => { slide.removeEventListener("click", open); slide.removeEventListener("keydown", key); });
+      });
+      const back = element.querySelector<HTMLButtonElement>(".content__back")!;
+      const close = () => transition.close();
+      const escape = (event: KeyboardEvent) => { if (event.key === "Escape") close(); };
+      back.addEventListener("click", close);
+      document.addEventListener("keydown", escape);
+      element.classList.add("codrops-gallery--ready");
+      cleanup = () => { listeners.forEach((remove) => remove()); back.removeEventListener("click", close); document.removeEventListener("keydown", escape); slider.destroy(); transition.tl?.kill(); transition.split?.revert(); };
+    }
+    init();
+    return () => { disposed = true; cleanup(); };
+  }, [mounted]);
 
-  const onScroll = () => {
-    const node = scroller.current;
-    if (!node) return;
-    const third = node.scrollHeight / 3;
-    if (node.scrollTop < third * 0.5) node.scrollTop += third;
-    if (node.scrollTop > third * 1.5) node.scrollTop -= third;
-  };
-
-  const close = useCallback(() => {
-    setOpen(null);
-    window.setTimeout(() => lastTrigger.current?.focus(), 0);
-  }, []);
-  useEffect(() => {
-    if (open === null) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    closeButton.current?.focus();
-    const keydown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") close();
-      if (event.key === "ArrowRight") setOpen((value) => value === null ? null : (value + 1) % count);
-      if (event.key === "ArrowLeft") setOpen((value) => value === null ? null : (value - 1 + count) % count);
-    };
-    window.addEventListener("keydown", keydown);
-    return () => {
-      document.body.style.overflow = previous;
-      window.removeEventListener("keydown", keydown);
-    };
-  }, [open, close]);
-
-  return (
-    <main className="infinite-gallery">
-      <div className="infinite-gallery__intro">
-        <Link href="/gallery" className="infinite-gallery__back">← Original gallery</Link>
-        <p className="infinite-gallery__eyebrow">Experimental view · Community archive</p>
-        <h1>Moments from our community</h1>
-        <p>Scroll to explore. Select a photograph to see it in focus.</p>
-        <span className="infinite-gallery__hint">↓ Scroll or swipe</span>
+  if (!mounted) return null;
+  return createPortal(
+    <div className="codrops-gallery" ref={root}>
+      <div className="codrops-gallery__frame"><div><Link href="/gallery">← Original gallery</Link><span> / Experimental gallery</span></div><span>Crimean Tatar Heritage Canada</span></div>
+      <div className="codrops-gallery__instruction">Scroll or swipe to explore · Select an image</div>
+      <div className="gallery" aria-label="Community photo gallery">
+        {galleryStills.map((item, index) => (
+          <figure className="gallery__slide" key={item.src} tabIndex={0} role="button" aria-label={`Open ${titles[index]}: ${item.alt}`}
+            style={{ "--stagger": `${positions[index][0]}vw`, "--img-w": `${positions[index][1]}vw` } as React.CSSProperties}>
+            <div className="gallery__img-wrapper">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="gallery__img" src={item.src} alt={item.alt} loading="eager" style={{ objectPosition: item.objectPosition ?? "center" }} />
+            </div>
+            <figcaption>{titles[index]}</figcaption>
+          </figure>
+        ))}
       </div>
-      <div className="infinite-gallery__viewport" ref={scroller} onScroll={onScroll} aria-label="Community photographs">
-        {Array.from({ length: 3 }, (_, copy) => galleryStills.map((item, index) => (
-          <button
-            className="infinite-gallery__card"
-            key={`${copy}-${index}`}
-            type="button"
-            aria-label={`View photograph ${index + 1}: ${item.alt}`}
-            onClick={(event) => { lastTrigger.current = event.currentTarget; setOpen(index); }}
-          >
-            <span className="infinite-gallery__photo">
-              <Image src={item.src} alt="" fill sizes="(max-width: 700px) 84vw, 43vw" className="object-cover" style={{ objectPosition: item.objectPosition ?? "center" }} />
-            </span>
-            <span className="infinite-gallery__index">{String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}</span>
-            <span className="infinite-gallery__label">{item.alt}</span>
-          </button>
-        )))}
+      <div className="content" role="dialog" aria-modal="true" aria-label="Photograph detail">
+        <div className="content-wrapper">
+          <figure className="content__preview-img">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img alt="" />
+          </figure>
+          <div className="content__group-list">
+            <button className="content__back" type="button">← Back [ESC]</button>
+            {galleryStills.map((item, index) => (
+              <div className="content__group" data-index={index} key={item.src}>
+                <h2 className="content__title">{titles[index]}</h2>
+                <p className="content__description">{item.alt}</p>
+                <p className="content__count">{String(index + 1).padStart(2, "0")} / {galleryStills.length}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      {mounted && createPortal(
-        <AnimatePresence>
-          {open !== null && (
-            <motion.div className="infinite-gallery__overlay" role="dialog" aria-modal="true" aria-label="Photograph viewer"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduced ? 0 : 0.25 }}>
-              <button className="infinite-gallery__dismiss" aria-label="Close photograph" onClick={close} ref={closeButton}>×</button>
-              <button className="infinite-gallery__arrow" aria-label="Previous photograph" onClick={() => setOpen((open - 1 + count) % count)}>←</button>
-              <motion.figure key={open} className="infinite-gallery__detail" initial={{ opacity: 0, scale: reduced ? 1 : 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reduced ? 0 : 0.45 }}>
-                <div className="infinite-gallery__detail-photo"><Image src={galleryStills[open]!.src} alt={galleryStills[open]!.alt} fill sizes="90vw" className="object-contain" /></div>
-                <figcaption>{galleryStills[open]!.alt} <span>{String(open + 1).padStart(2, "0")} / {count}</span></figcaption>
-              </motion.figure>
-              <button className="infinite-gallery__arrow" aria-label="Next photograph" onClick={() => setOpen((open + 1) % count)}>→</button>
-            </motion.div>
-          )}
-        </AnimatePresence>, document.body)}
-    </main>
+    </div>, document.body
   );
 }

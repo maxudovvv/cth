@@ -1142,38 +1142,45 @@ p {
     stroke-dashoffset: 0 !important;
   }
 }
-/* Isolated gallery experiment inspired by the Codrops infinite scroll study. */
-.infinite-gallery { min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); background: #081a2a; color: #f8f1e7; }
-.infinite-gallery__intro { align-self: center; padding: clamp(2rem, 6vw, 7rem); }
-.infinite-gallery__back { display: inline-block; margin-bottom: clamp(3rem, 12vh, 9rem); color: #dcbf83; font-size: .85rem; }
-.infinite-gallery__eyebrow { color: #dcbf83; text-transform: uppercase; letter-spacing: .24em; font-size: .7rem; }
-.infinite-gallery h1 { color: #f8f1e7; font-family: Georgia, serif; font-weight: 400; font-size: clamp(2.8rem, 5.2vw, 6rem); line-height: 1.05; max-width: 12ch; margin: 1.4rem 0; }
-.infinite-gallery__intro > p:not(.infinite-gallery__eyebrow) { color: #d6d6cf; max-width: 25rem; }
-.infinite-gallery__hint { display: block; margin-top: 3rem; color: #dcbf83; font-size: .8rem; letter-spacing: .15em; text-transform: uppercase; }
-.infinite-gallery__viewport { height: 100svh; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; padding: 20vh 9vw 20vh 2vw; }
-.infinite-gallery__viewport::-webkit-scrollbar { display: none; }
-.infinite-gallery__card { display: block; width: min(100%, 570px); margin: 0 auto 11vh; color: #f8f1e7; text-align: left; }
-.infinite-gallery__photo { position: relative; display: block; width: 100%; aspect-ratio: 1.17; overflow: hidden; background: #213745; box-shadow: 0 22px 60px #0005; }
-.infinite-gallery__photo img { transition: transform .65s cubic-bezier(.2,.7,.2,1); }
-.infinite-gallery__card:hover img, .infinite-gallery__card:focus-visible img { transform: scale(1.06); }
-.infinite-gallery__card:focus-visible { outline: 2px solid #dcbf83; outline-offset: 6px; }
-.infinite-gallery__index { display: block; color: #dcbf83; font-size: .7rem; letter-spacing: .2em; margin: 1rem 0 .35rem; }
-.infinite-gallery__label { display: block; max-width: 35rem; font-family: Georgia, serif; font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.35; }
-.infinite-gallery__overlay { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; gap: clamp(.2rem, 2vw, 2rem); padding: 4rem 1rem 2rem; background: #05121af2; color: white; }
-.infinite-gallery__dismiss { position: absolute; top: 1rem; right: 1.5rem; font-size: 2.4rem; line-height: 1; }
-.infinite-gallery__arrow { flex: 0 0 2.5rem; height: 3rem; font-size: 1.6rem; color: #e4c48b; }
-.infinite-gallery__detail { width: min(100%, 1100px); min-width: 0; }
-.infinite-gallery__detail-photo { position: relative; height: min(72svh, 780px); }
-.infinite-gallery__detail figcaption { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; color: #eee5d9; font-size: .85rem; }
+/* Codrops gallery study, isolated to the experimental route. */
+body:has(.codrops-gallery) { overflow: hidden; }
+body:has(.codrops-gallery) footer { display: none; }
+.codrops-gallery { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: #0b1b2a; color: #e9d3a3; overscroll-behavior: none; touch-action: none; }
+.codrops-gallery__frame { position: fixed; top: 84px; left: 3vw; right: 3vw; z-index: 4; display: flex; justify-content: space-between; gap: 2rem; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; pointer-events: none; }
+.codrops-gallery__frame a { pointer-events: auto; color: #f5e7cc; text-decoration: underline; text-underline-offset: 5px; }
+.codrops-gallery__instruction { position: fixed; bottom: 2rem; left: 3vw; z-index: 3; color: #d9bd77; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; pointer-events: none; }
+.codrops-gallery .gallery { display: flex; flex-direction: column; align-items: center; gap: 12vh; width: 100%; padding-top: 14vh; }
+.codrops-gallery:not(.codrops-gallery--ready) .gallery { opacity: 0; }
+.codrops-gallery .gallery__slide { position: relative; flex-shrink: 0; transform: translateX(var(--stagger)); cursor: pointer; outline: none; padding: 0; }
+.codrops-gallery .gallery__slide:focus-visible { outline: 2px solid #d9bd77; outline-offset: 8px; }
+.codrops-gallery .gallery__slide figcaption { display: block; margin-top: .6rem; color: #f5e7cc; font-family: Georgia, serif; font-size: clamp(1rem, 1.5vw, 1.35rem); }
+.codrops-gallery .gallery__img-wrapper { position: relative; display: block; width: var(--img-w); min-width: 130px; height: auto; aspect-ratio: .8; overflow: hidden; pointer-events: none; user-select: none; box-shadow: 0 20px 50px #0007; }
+.codrops-gallery .gallery__img-wrapper img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.2); }
+.codrops-gallery .content { display: none; position: fixed; inset: 0; z-index: 1000; background: #f2eee5; color: #102438; touch-action: auto; }
+.codrops-gallery .content__preview-img { position: fixed; margin: 0; top: 0; left: 0; height: 100vh; aspect-ratio: .8; overflow: hidden; }
+.codrops-gallery .content__preview-img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.2); }
+.codrops-gallery .content__group-list { display: flex; flex-direction: column; min-height: 100vh; padding-inline: calc(80vh + 1.5vw) 3vw; padding-block: 3rem; }
+.codrops-gallery .content__back { align-self: flex-start; border: 0; background: none; color: #102438; cursor: pointer; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; }
+.codrops-gallery .content__back:focus-visible { outline: 2px solid #a67c34; outline-offset: 5px; }
+.codrops-gallery .content__group { display: none; }
+.codrops-gallery .content__group.active { display: block; }
+.codrops-gallery .content__title { color: #102438; font-family: Georgia, serif; font-weight: 400; font-size: clamp(2.5rem, 6vw, 6rem); line-height: 1; margin: 28vh 0 2rem; }
+.codrops-gallery .content__description { max-width: 50ch; color: #33475b; font-size: clamp(1rem, 1.7vw, 1.35rem); line-height: 1.55; }
+.codrops-gallery .content__count { margin-top: 2rem; color: #9a7133; letter-spacing: .2em; font-size: .8rem; }
 @media (max-width: 700px) {
-  .infinite-gallery { display: block; }
-  .infinite-gallery__intro { padding: 5rem 8vw 1rem; }
-  .infinite-gallery__back { margin-bottom: 2rem; }
-  .infinite-gallery h1 { font-size: clamp(2.5rem, 10vw, 4rem); }
-  .infinite-gallery__hint { margin-top: 1rem; }
-  .infinite-gallery__viewport { height: 65svh; padding: 8vh 8vw; }
-  .infinite-gallery__card { margin-bottom: 6vh; }
-  .infinite-gallery__detail-photo { height: 60svh; }
-  .infinite-gallery__arrow { flex-basis: 1.8rem; }
+  .codrops-gallery__frame { top: 77px; font-size: .6rem; }
+  .codrops-gallery__frame > span { display: none; }
+  .codrops-gallery .gallery { gap: 9vh; padding-top: 20vh; }
+  .codrops-gallery .gallery__slide { --stagger: 0vw !important; --img-w: 68vw !important; }
+  .codrops-gallery .gallery__slide:nth-child(even) { --stagger: 8vw !important; }
+  .codrops-gallery .gallery__slide:nth-child(odd) { --stagger: -8vw !important; }
+  .codrops-gallery .content__preview-img { width: 100%; height: 58vh; aspect-ratio: auto; }
+  .codrops-gallery .content__group-list { min-height: 100svh; padding: 62vh 6vw 2rem; }
+  .codrops-gallery .content__back { position: fixed; top: 78px; right: 6vw; z-index: 2; padding: .5rem; background: #f2eee5; }
+  .codrops-gallery .content__title { margin: 1.5rem 0 1rem; font-size: clamp(2rem, 10vw, 3.5rem); }
+  .codrops-gallery .content__description { font-size: 1rem; }
 }
-@media (prefers-reduced-motion: reduce) { .infinite-gallery__photo img { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .codrops-gallery { touch-action: auto; overflow-y: auto; }
+  .codrops-gallery .gallery__slide, .codrops-gallery .gallery__img-wrapper, .codrops-gallery .gallery__slide figcaption { visibility: visible !important; opacity: 1 !important; }
+}
