@@ -4,15 +4,24 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { galleryStills } from "@/content/data/media";
 
 const titles = ["Community parade", "Dance and tradition", "Heritage on display", "Her Heart screening", "Portrait exhibition", "Gathering together", "Stories in print", "Art and memory", "A conversation", "Cooking together", "Hands on heritage", "A taste of Crimea"];
 const positions = [[-24, 20], [14, 10], [-18, 23], [22, 18], [-26, 25], [28, 28], [-20, 16], [8, 30], [-12, 15], [15, 23], [-24, 24], [26, 16]];
 
-export function InfiniteGallery() {
+export function InfiniteGallery({ desktopOnly = false }: { desktopOnly?: boolean }) {
   const root = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const reduce = useReducedMotion();
+  useEffect(() => {
+    if (!desktopOnly) { setMounted(true); return; }
+    const media = window.matchMedia("(min-width: 701px)");
+    const update = () => setMounted(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, [desktopOnly]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -54,7 +63,12 @@ export function InfiniteGallery() {
 
   if (!mounted) return null;
   return createPortal(
-    <div className="codrops-gallery" ref={root}>
+    <motion.div
+      className="codrops-gallery" ref={root}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reduce ? 0.15 : 0.42, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="codrops-gallery__frame"><div><Link href="/gallery-classic">← Classic gallery</Link><span> / Community archive</span></div><span>Crimean Tatar Heritage Canada</span></div>
       <div className="codrops-gallery__instruction">Scroll or swipe to explore · Select an image</div>
       <div className="gallery" aria-label="Community photo gallery">
@@ -65,7 +79,7 @@ export function InfiniteGallery() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className="gallery__img" src={item.src} alt={item.alt} loading="eager" style={{ objectPosition: item.objectPosition ?? "center" }} />
             </div>
-            <figcaption>{titles[index]}</figcaption>
+            <figcaption>{item.alt}</figcaption>
           </figure>
         ))}
       </div>
@@ -87,6 +101,6 @@ export function InfiniteGallery() {
           </div>
         </div>
       </div>
-    </div>, document.body
+    </motion.div>, document.body
   );
 }
