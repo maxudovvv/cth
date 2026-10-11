@@ -31,7 +31,7 @@ export default function UpcomingEventsPage() {
                   <div><dt className="text-xs font-semibold uppercase tracking-widest text-navy-600">Date</dt>
                     <dd className="mt-1 font-semibold"><time dateTime="2026-11-14">Saturday, November 14, 2026</time></dd></div>
                   <div><dt className="text-xs font-semibold uppercase tracking-widest text-navy-600">Time</dt>
-                    <dd className="mt-1"><time dateTime="2026-11-14T09:30:00-05:00">9:30 AM</time> – <time dateTime="2026-11-14T11:00:00-05:00">11:00 AM</time> <span className="text-sm text-navy-600">(Toronto time)</span></dd></div>
+                    <dd className="mt-1"><time dateTime="2026-11-14T09:00:00-05:00">9:00 AM</time> – <time dateTime="2026-11-14T11:00:00-05:00">11:00 AM</time> <span className="text-sm text-navy-600">(Toronto time)</span></dd></div>
                   <div><dt className="text-xs font-semibold uppercase tracking-widest text-navy-600">Location</dt>
                     <dd className="mt-1"><span className="font-semibold">Kolo Cafe</span><br />365 Jane St, Toronto, ON M6S 3Z3</dd></div>
                 </dl>
