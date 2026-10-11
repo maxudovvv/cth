@@ -8,6 +8,7 @@ const pages = [
   "/our-activities",
   "/gallery",
   "/upcoming-events",
+  "/past-events",
   "/donate",
   "/contact",
 ];

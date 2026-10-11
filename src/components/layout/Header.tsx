@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { primaryNav, donateNav } from "@/content/data/site";
+import { isActiveNavItem } from "@/lib/navigation";
 
 const BRAND_LOGO = "/media/brand/crimean-tatar-heritage-canada-logo-dark.png";
 
@@ -22,6 +23,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -33,11 +35,22 @@ export function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [open]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1280px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -45,14 +58,26 @@ export function Header() {
       if (e.key === "Escape") {
         setOpen(false);
         toggleRef.current?.focus();
+      } else if (e.key === "Tab") {
+        const links = mobileNavRef.current?.querySelectorAll<HTMLAnchorElement>("a[href]");
+        const toggle = toggleRef.current;
+        if (!links?.length || !toggle) return;
+        const last = links[links.length - 1];
+        if (!last) return;
+        if (e.shiftKey && document.activeElement === toggle) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          toggle.focus();
+        }
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const isActive = (href: string) =>
-    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+  const isActive = (href: string) => isActiveNavItem(pathname, href);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -90,7 +115,7 @@ export function Header() {
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`group relative inline-flex items-center rounded-full px-3.5 py-1.5 text-sm font-medium [text-shadow:_0_1px_6px_rgba(7,17,31,0.5)] transition-[color,background-color,transform] duration-200 ease-out focus-visible:rounded-full active:scale-[0.97] ${
+                    className={`group relative inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1.5 text-sm font-medium 2xl:px-3.5 [text-shadow:_0_1px_6px_rgba(7,17,31,0.5)] transition-[color,background-color,transform] duration-200 ease-out focus-visible:rounded-full active:scale-[0.97] ${
                       active
                         ? "text-gold"
                         : "text-ivory hover:bg-white/[0.08] hover:text-gold-soft active:bg-white/10"
@@ -164,14 +189,15 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reduce ? 0 : 0.3 }}
-            className="fixed inset-0 top-0 z-40 xl:hidden"
+            className="fixed inset-0 top-0 z-40 overflow-y-auto overscroll-contain bg-[rgba(10,23,37,0.97)] backdrop-blur-xl xl:hidden"
           >
-            <div className="absolute inset-0 bg-[rgba(10,23,37,0.97)] backdrop-blur-xl" onClick={() => setOpen(false)} />
+            <div aria-hidden="true" className="absolute inset-0" onClick={() => setOpen(false)} />
             <motion.nav
+              ref={mobileNavRef}
               aria-label="Primary (mobile)"
               initial={{ y: reduce ? 0 : -16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: reduce ? 0 : -16, opacity: 0 }}
+              exit={{ y: reduce ? 0 : -16, opacity: 0, pointerEvents: "none" }}
               transition={{ duration: reduce ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="relative mt-[68px] flex flex-col gap-1 px-6 pb-10 pt-6"
             >
@@ -186,9 +212,14 @@ export function Header() {
                   >
                     <Link
                       href={item.href}
+                      onClick={(event) => {
+                        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                        setOpen(false);
+                        toggleRef.current?.focus();
+                      }}
                       aria-current={active ? "page" : undefined}
-                      className={`flex min-h-[48px] items-center justify-between rounded-lg border-b border-white/10 px-2 py-3 font-display text-2xl transition-[color,background-color,transform] duration-200 focus-visible:rounded-lg active:scale-[0.99] ${
-                        active ? "bg-gold/10 text-gold" : "text-ivory hover:text-gold-soft active:bg-white/5"
+                      className={`flex min-h-[48px] touch-manipulation items-center justify-between rounded-lg border-b border-white/10 px-2 py-3 font-display text-2xl transition-[color,background-color,transform] duration-200 focus-visible:rounded-lg active:scale-[0.99] ${
+                        active ? "bg-gold/10 text-gold" : "text-ivory [@media(hover:hover)]:hover:text-gold-soft active:bg-white/5"
                       }`}
                     >
                       <span className="flex items-center gap-3">
@@ -202,6 +233,11 @@ export function Header() {
               })}
               <Link
                 href={donateNav.href}
+                onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  setOpen(false);
+                  toggleRef.current?.focus();
+                }}
                 className="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-full bg-gold px-6 py-4 font-semibold text-navy transition-[transform,filter] duration-200 focus-visible:rounded-full active:scale-[0.98] active:brightness-95"
               >
                 Donate

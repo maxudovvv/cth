@@ -1,42 +1,57 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { EventsHeader } from "@/components/events/EventsHeader";
+import { ButtonLink } from "@/components/ui/Primitives";
 
 export const metadata: Metadata = {
-  title: "Upcoming Events",
+  title: "Future Events",
   alternates: { canonical: "/upcoming-events" },
-  description: "Upcoming community gatherings and cultural events from Crimean Tatar Heritage Canada.",
+  description: "Join The Crimean Tatar Coffee Tradition: Masterclass & Tasting on November 14, 2026, at Kolo Cafe in Toronto.",
 };
 
 export default function UpcomingEventsPage() {
   return (
     <>
-      <header className="relative isolate overflow-hidden bg-navy text-ivory">
-        <Image src="/media/hero/upcoming-events.jpg" alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[65%_center] md:object-center" />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-navy/95 via-navy/70 to-navy/20" />
-        <div className="container-wide py-24 pt-36 md:py-32 md:pt-44">
-          <p className="text-sm font-semibold uppercase tracking-widest text-gold-soft">Gather · Connect · Celebrate</p>
-          <h1 className="mt-5 max-w-2xl font-display text-5xl font-semibold leading-tight text-ivory [text-shadow:0_2px_12px_rgba(0,0,0,0.65)] md:text-6xl">Upcoming Events</h1>
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-ivory/90">Meet, share stories, and celebrate Crimean Tatar heritage with our community.</p>
-        </div>
-      </header>
-
-      <section className="bg-ivory py-16 md:py-20" aria-labelledby="events-status">
-        <div className="container-wide max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-navy-600">Stay connected</p>
-          <h2 id="events-status" className="mt-4 font-display text-3xl text-navy md:text-4xl">
-            No upcoming events at the moment.
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-navy-600">
-            New events will be announced here. Check back soon for upcoming cultural programs,
-            workshops, lectures, and community gatherings.
-          </p>
-          <Link
-            href="/our-activities"
-            className="mt-8 inline-flex min-h-[48px] items-center justify-center rounded-full border border-navy/25 px-6 py-3 font-semibold text-navy transition-colors hover:border-gold hover:bg-gold/10"
-          >
-            Explore our activities
-          </Link>
+      <EventsHeader />
+      <section className="bg-ivory py-12 md:py-20" aria-labelledby="coffee-event-title">
+        <div className="container-wide">
+          <article className="overflow-hidden rounded-3xl border border-line bg-white/50 shadow-soft">
+            <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="relative min-h-[280px] lg:min-h-full">
+                <Image src="/media/events/coffee-masterclass-2026.jpg"
+                  alt="Illustrative still life of copper coffee ware, embroidered linen, and traditional pastries."
+                  fill sizes="(max-width: 1023px) 100vw, 45vw" className="object-cover object-[70%_center]" />
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent" />
+                <p className="absolute bottom-6 left-6 rounded-full border border-ivory/30 bg-navy/75 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-ivory">Masterclass &amp; tasting</p>
+              </div>
+              <div className="p-6 sm:p-9 lg:p-12">
+                <p className="text-xs font-semibold uppercase tracking-widest text-navy-600">An intimate morning in Toronto</p>
+                <h2 id="coffee-event-title" className="mt-4 font-display text-3xl leading-tight text-navy md:text-4xl">The Crimean Tatar Coffee Tradition: Masterclass &amp; Tasting</h2>
+                <dl className="mt-7 grid gap-4 border-y border-line py-6 text-navy">
+                  <div><dt className="text-xs font-semibold uppercase tracking-widest text-navy-600">Date</dt>
+                    <dd className="mt-1 font-semibold"><time dateTime="2026-11-14">Saturday, November 14, 2026</time></dd></div>
+                  <div><dt className="text-xs font-semibold uppercase tracking-widest text-navy-600">Time</dt>
+                    <dd className="mt-1"><time dateTime="2026-11-14T09:30:00-05:00">9:30 AM</time> – <time dateTime="2026-11-14T11:00:00-05:00">11:00 AM</time> <span className="text-sm text-navy-600">(Toronto time)</span></dd></div>
+                  <div><dt className="text-xs font-semibold uppercase tracking-widest text-navy-600">Location</dt>
+                    <dd className="mt-1"><span className="font-semibold">Kolo Cafe</span><br />365 Jane St, Toronto, ON M6S 3Z3</dd></div>
+                </dl>
+                <div className="mt-6 space-y-4 leading-relaxed text-navy-600">
+                  <p>Discover the rich rituals, aromas, and stories behind Crimean Tatar coffee. Join us for an intimate, hands-on masterclass where you’ll learn authentic preparation techniques, taste freshly brewed coffee paired with traditional pastries, and explore an archival photo exhibition tracing the history of this cherished tradition.</p>
+                  <p>To make sure everyone gets a truly personal and hands-on experience, we are keeping this gathering small and cozy. These spots will go quickly, so we would love for you to reserve yours soon.</p>
+                </div>
+                <div className="mt-8">
+                  <ButtonLink href="https://Crimean-Tatar-Coffee-Tradition.eventbrite.com" className="w-full rounded-full sm:w-auto">Reserve your seat <span aria-hidden="true">↗</span></ButtonLink>
+                  <p className="mt-3 text-sm text-navy-600">Reservations via Eventbrite.</p>
+                </div>
+                <p className="mt-7 font-display text-xl italic text-navy">We can’t wait to share this special tradition with you.</p>
+              </div>
+            </div>
+          </article>
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-8">
+            <p className="text-navy-600">Looking back on our community gatherings?</p>
+            <Link href="/past-events" className="inline-flex min-h-[48px] items-center font-semibold text-navy underline decoration-gold underline-offset-8">Explore Past Events →</Link>
+          </div>
         </div>
       </section>
     </>
