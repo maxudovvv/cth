@@ -18,12 +18,11 @@ export default function UpcomingEventsPage() {
         <div className="container-wide">
           <article className="overflow-hidden rounded-3xl border border-line bg-white/50 shadow-soft">
             <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
-              <div className="relative min-h-[280px] lg:min-h-full">
-                <Image src="/media/events/coffee-masterclass-2026.jpg"
-                  alt="Illustrative still life of copper coffee ware, embroidered linen, and traditional pastries."
-                  fill sizes="(max-width: 1023px) 100vw, 45vw" className="object-cover object-[70%_center]" />
-                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent" />
-                <p className="absolute bottom-6 left-6 rounded-full border border-ivory/30 bg-navy/75 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-ivory">Masterclass &amp; tasting</p>
+              <div className="bg-ivory-dim">
+                <Image src="/media/events/coffee-masterclass-poster-2026.webp"
+                  alt="Event poster for Crimean Tatar Coffee Tradition: Masterclass & Tasting at Kolo Cafe on November 14."
+                  width={1080} height={1350} sizes="(max-width: 1023px) 100vw, 45vw"
+                  className="h-auto w-full" />
               </div>
               <div className="p-6 sm:p-9 lg:p-12">
                 <p className="text-xs font-semibold uppercase tracking-widest text-navy-600">An intimate morning in Toronto</p>
