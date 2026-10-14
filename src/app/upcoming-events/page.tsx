@@ -19,9 +19,9 @@ export default function UpcomingEventsPage() {
           <article className="overflow-hidden rounded-3xl border border-line bg-white/50 shadow-soft">
             <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
               <div className="bg-ivory-dim">
-                <Image src="/media/events/coffee-masterclass-poster-2026-v2.webp"
+                <Image src="/media/events/coffee-masterclass-poster-2026-v3.webp"
                   alt="Event poster for Crimean Tatar Coffee Tradition: Masterclass & Tasting at Kolo Cafe on November 14."
-                  width={1080} height={1350} sizes="(max-width: 1023px) 100vw, 45vw"
+                  width={1620} height={2025} sizes="(max-width: 1023px) 100vw, 45vw"
                   className="h-auto w-full" />
               </div>
               <div className="p-6 sm:p-9 lg:p-12">
