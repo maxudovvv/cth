@@ -1,0 +1,4 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {parseCheckout} from '../src/lib/checkout-input.ts';
+const good={amount:25.5,frequency:'one_time',donorName:'Demo',email:'demo@example.com'};
+test('valid contribution preserves CAD cents and monthly choice',()=>{assert.equal(parseCheckout(good).amount,25.5);assert.equal(parseCheckout({...good,frequency:'monthly'}).frequency,'monthly')});
+test('rejects invalid shapes, coerced values, fractions and excessive fields before Stripe',()=>{for(const input of [null,[],true,{...good,amount:'25'},{...good,amount:5.001},{...good,amount:Infinity},{...good,amount:0},{...good,frequency:'yearly'},{...good,email:'x'.repeat(255)},{...good,donorName:{}},{...good,dedication:'x'.repeat(201)}])assert.throws(()=>parseCheckout(input));assert.equal(parseCheckout({...good,amount:19.99}).amount,19.99)});

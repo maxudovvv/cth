@@ -5,7 +5,7 @@ import { useRef, useState, type FormEvent } from "react";
 const email = "canadacrimea@gmail.com";
 const button = "min-h-[48px] rounded-xl border border-line px-4 py-3 font-semibold text-navy transition-colors hover:border-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold";
 
-export function InteracContribution() {
+export function InteracContribution({ cardEnabled = false }: { cardEnabled?: boolean }) {
   const [amount, setAmount] = useState("50");
   const [custom, setCustom] = useState(false);
   const [details, setDetails] = useState(false);
@@ -30,6 +30,7 @@ export function InteracContribution() {
     event.preventDefault();
     if (!valid) return;
     if (method === "card") {
+      if (!cardEnabled) { setStatus("Card payments are currently unavailable. Please use Interac e-Transfer."); return; }
       const form = new FormData(event.currentTarget);
       setLoading(true);
       setStatus("");
@@ -60,10 +61,10 @@ export function InteracContribution() {
           <h3 className="mt-2 font-display text-2xl text-navy">Interac e-Transfer</h3>
           <p className="mt-2 text-sm text-navy-600">Send a one-time contribution through your bank.</p>
         </button>
-        <button type="button" disabled={loading} aria-pressed={method === "card"} onClick={() => { setMethod("card"); setStatus(""); }} className={`rounded-xl border p-5 text-left ${method === "card" ? "border-gold bg-ivory" : "border-line bg-white"}`}>
+        <button type="button" disabled={loading || !cardEnabled} aria-pressed={method === "card"} onClick={() => { setMethod("card"); setStatus(""); }} className={`rounded-xl border p-5 text-left ${method === "card" ? "border-gold bg-ivory" : "border-line bg-white"}`}>
           <p className="text-xs font-semibold uppercase tracking-widest text-navy-600">Cards &amp; international</p>
           <h3 className="mt-2 font-display text-2xl text-navy">Pay by card</h3>
-          <p className="mt-2 text-sm text-navy-600">Make a one-time or monthly contribution securely through Stripe.</p>
+          <p className="mt-2 text-sm text-navy-600">{cardEnabled ? "Make a one-time or monthly contribution securely through Stripe." : "Currently unavailable. Please use Interac e-Transfer."}</p>
         </button>
       </div>
       {method === "card" && <fieldset disabled={loading}>

@@ -21,6 +21,8 @@ const uses = [
   "Community activities",
 ];
 
+export const dynamic = "force-dynamic";
+
 export default function DonatePage() {
   return (
     <>
@@ -50,7 +52,7 @@ export default function DonatePage() {
           </StaggerGroup>
 
           <div className="mt-10">
-            <InteracContribution />
+            <InteracContribution cardEnabled={process.env.STRIPE_CHECKOUT_ENABLED !== "false" && Boolean(process.env.STRIPE_SECRET_KEY)} />
           </div>
         </div>
       </Section>

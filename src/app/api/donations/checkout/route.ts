@@ -1,16 +1,8 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { parseCheckout } from "@/lib/checkout-input";
 
 export const runtime = "nodejs";
-
-type CheckoutRequest = {
-  amount?: number;
-  frequency?: "one_time" | "monthly";
-  designation?: string;
-  dedication?: string;
-  donorName?: string;
-  email?: string;
-};
 
 function siteUrl(request: Request) {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
@@ -38,23 +30,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = (await request.json()) as CheckoutRequest;
-    const amount = Number(body.amount);
-    const frequency = body.frequency;
-    const email = String(body.email ?? "").trim().toLowerCase();
-    const donorName = String(body.donorName ?? "").trim().slice(0, 120);
-    const designation = String(body.designation ?? "Where it is needed most").trim().slice(0, 120);
-    const dedication = String(body.dedication ?? "").trim().slice(0, 200);
-
-    if (!Number.isFinite(amount) || amount < 5 || amount > 100000) {
-      return NextResponse.json({ error: "Please enter an amount between $5 and $100,000 CAD." }, { status: 400 });
-    }
-    if (frequency !== "one_time" && frequency !== "monthly") {
-      return NextResponse.json({ error: "Please select one-time or monthly." }, { status: 400 });
-    }
-    if (!donorName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: "Please enter your name and a valid email address." }, { status: 400 });
-    }
+    const raw = await request.text();
+    if (new TextEncoder().encode(raw).length > 8192) return NextResponse.json({ error: "Contribution details are too long." }, { status: 413 });
+    let input: ReturnType<typeof parseCheckout>;
+    try { input = parseCheckout(JSON.parse(raw)); }
+    catch (error) { return NextResponse.json({ error: error instanceof SyntaxError ? "Please enter valid contribution details." : error instanceof Error ? error.message : "Invalid contribution details." }, { status: 400 }); }
+    const { amount, frequency, donorName, email, designation, dedication } = input;
 
     const stripe = new Stripe(secretKey);
     const metadata = {

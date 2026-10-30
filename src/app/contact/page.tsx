@@ -20,7 +20,8 @@ export default function ContactPage() {
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
           <div className="rounded-2xl bg-white/70 p-6 ring-1 ring-line sm:p-8">
             <PrototypeForm
-              submitLabel="Send message"
+              recipient={contact.email}
+              submitLabel="Prepare email draft"
               description="Send a message to Crimean Tatar Heritage Canada."
               fields={[
                 { name: "name", label: "Your name", required: true, autoComplete: "name" },

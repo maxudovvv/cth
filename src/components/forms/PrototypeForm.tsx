@@ -1,14 +1,11 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useCallback, useId, useState, type FormEvent } from "react";
 
 /**
- * PrototypeForm — a visually complete, ACCESSIBLE, LOCAL-ONLY form.
+ * Email draft composer. Delivery happens only in the visitor’s email application.
  *
- * It does NOT submit anywhere: no external service, no network request, no data
- * storage. On valid submit it shows a local success message and makes clear this
- * is prototype behavior. Real submission wiring (to a monitored recipient) is a
- * documented future step (see docs/provisional-mvp-implementation-plan.md).
+ * Values remain on this page; no delivery or storage is claimed.
  */
 
 export type FieldDef = {
@@ -20,17 +17,22 @@ export type FieldDef = {
 };
 
 type Props = {
+  recipient: string;
   fields: FieldDef[];
   submitLabel: string;
   /** Short description of what this form is for. */
   description?: string;
 };
 
-export function PrototypeForm({ fields, submitLabel, description }: Props) {
+export function PrototypeForm({ recipient, fields, submitLabel, description }: Props) {
   const formId = useId();
+  const focusDraft = useCallback((node: HTMLHeadingElement | null) => node?.focus(), []);
   const [values, setValues] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [copyStatus, setCopyStatus] = useState("");
+  const draft = fields.map(f => `${f.label}: ${(values[f.name] ?? "").trim()}`).join("\n\n");
+  const mailHref = `mailto:${recipient}?subject=${encodeURIComponent(values.subject?.trim() || "Website enquiry — Crimean Tatar Heritage Canada")}&body=${encodeURIComponent(draft)}`;
 
   function validate(): Record<string, string> {
     const next: Record<string, string> = {};
@@ -60,26 +62,18 @@ export function PrototypeForm({ fields, submitLabel, description }: Props) {
 
   if (submitted) {
     return (
-      <div
-        role="status"
-        className="rounded-lg border border-turquoise/40 bg-turquoise/5 p-6"
-      >
-        <p className="font-display text-xl text-navy">Thank you — form received (prototype).</p>
-        <p className="mt-2 text-sm text-navy-600">
-          This is a local prototype: nothing was actually sent or stored. In the live
-          site, this message would go to the organization&rsquo;s monitored inbox.
-        </p>
-        <button
-          type="button"
-          className="mt-4 text-sm font-semibold text-turquoise underline underline-offset-4"
-          onClick={() => {
-            setSubmitted(false);
-            setValues({});
-          }}
-        >
-          Submit another response
-        </button>
-      </div>
+      <section className="space-y-4 rounded-lg border border-turquoise/40 bg-turquoise/5 p-6" aria-label="Email draft">
+        <h2 className="font-display text-xl text-navy" tabIndex={-1} ref={focusDraft}>Your message is ready to send</h2>
+        <p className="text-sm text-navy-600">Open this draft in your email app, review it and press Send there. Nothing has been sent by this website.</p>
+        <p className="break-all text-sm text-navy">To: {recipient}</p>
+        <pre className="max-h-72 overflow-auto whitespace-pre-wrap break-words rounded bg-white p-4 font-sans text-sm text-ink">{draft}</pre>
+        <div className="flex flex-wrap gap-3">
+          <a href={mailHref} className="inline-flex min-h-[44px] items-center rounded bg-gold px-5 py-3 text-sm font-semibold text-navy">Open email draft</a>
+          <button type="button" className="min-h-[44px] rounded border border-line px-4 py-3 text-sm text-navy" onClick={async () => { try { await navigator.clipboard.writeText(draft); setCopyStatus("Draft copied. Paste it into your email app and send it to the address above."); } catch { setCopyStatus("Select and copy the draft displayed above."); } }}>Copy message</button>
+          <button type="button" className="min-h-[44px] rounded px-4 py-3 text-sm text-turquoise underline" onClick={() => { setSubmitted(false); setCopyStatus(""); }}>Edit message</button>
+        </div>
+        <p role="status" className="text-sm text-navy-600">{copyStatus}</p>
+      </section>
     );
   }
 
@@ -89,7 +83,7 @@ export function PrototypeForm({ fields, submitLabel, description }: Props) {
         <p className="text-sm text-navy-600">{description}</p>
       )}
       <p id={`${formId}-note`} className="text-xs italic text-navy-600/80">
-        Prototype form — submissions are handled locally only and are not sent or stored.
+        Prepare an email draft, then send it from your email app. Your message is not stored on this website.
       </p>
 
       {fields.map((f) => {
@@ -100,6 +94,7 @@ export function PrototypeForm({ fields, submitLabel, description }: Props) {
           id,
           name: f.name,
           required: f.required,
+          maxLength: f.type === "textarea" ? 4000 : 200,
           "aria-invalid": err ? true : undefined,
           "aria-describedby": describedBy,
           autoComplete: f.autoComplete,
